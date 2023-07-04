@@ -34,7 +34,7 @@ export default function PopulationSection(props) {
     <React.Fragment>
       <CardContent>
         <Tabs value={value} centered onChange={handleChange} textColor='primary' indicatorColor='primary'>
-            <Tab label="Area" index={0}/>
+            <Tab label="Realms" index={0}/>
             <Tab label="Upgrades" index={1}/>
             <Tab label="Allocate Population" index={2}/>
         </Tabs>
