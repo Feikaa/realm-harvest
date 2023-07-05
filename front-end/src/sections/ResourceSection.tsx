@@ -1,9 +1,9 @@
 import * as React from 'react';
 import './ResourceSection.css';
 import { Box, Card, Tabs, CardContent, Tab, Typography } from '@mui/material';
-import Log from '../log.png';
-import Ore from '../ore.png';
-import Wheat from '../wheat.png';
+import Log from '../images/log.png';
+import Ore from '../images/ore.png';
+import Wheat from '../images/wheat.png';
 
 export default function PopulationSection(props) {
 

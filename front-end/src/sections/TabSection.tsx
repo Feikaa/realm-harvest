@@ -1,7 +1,14 @@
 import * as React from 'react';
 import './TabSection.css';
 import { Box, Card, Tabs, CardContent, Tab, Typography, createTheme, ThemeProvider } from '@mui/material';
-import AreaSection from './AreaSection';
+import AreaSection from './AreaSection.tsx';
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
 export default function PopulationSection(props) {
 
@@ -34,9 +41,9 @@ export default function PopulationSection(props) {
     <React.Fragment>
       <CardContent>
         <Tabs value={value} centered onChange={handleChange} textColor='primary' indicatorColor='primary'>
-            <Tab label="Realms" index={0}/>
-            <Tab label="Upgrades" index={1}/>
-            <Tab label="Allocate Population" index={2}/>
+            <Tab label="Realms" {...a11yProps(0)}/>
+            <Tab label="Upgrades" {...a11yProps(1)}/>
+            <Tab label="Allocate Population" {...a11yProps(2)}/>
         </Tabs>
         <Typography variant="h4">
           <br />

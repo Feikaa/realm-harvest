@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Box, Card, CardActions, CardContent, Button, Typography} from '@mui/material';
-import Tree from '../tree.png';
+import Tree from '../images/tree.png';
 
 export default function PopulationSection(props) {
 
