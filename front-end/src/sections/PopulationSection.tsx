@@ -2,9 +2,10 @@ import * as React from 'react';
 import './PopulationSection.css';
 import { Box, Card, CardActions, CardContent, Button, Typography} from '@mui/material';
 
-export default function PopulationSection(props) {
+export default function PopulationSection(props: any) {
 
   var population = props.population;
+  var aPop = props.aPop;
 
   const card = (
     <React.Fragment>
@@ -14,7 +15,7 @@ export default function PopulationSection(props) {
         </Typography>
         <Typography variant="h4">
           <br />
-          {population}
+          {population} ({aPop})
         </Typography>
       </CardContent>
     </React.Fragment>

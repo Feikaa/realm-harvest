@@ -5,18 +5,12 @@ import Log from '../images/log.png';
 import Ore from '../images/ore.png';
 import Wheat from '../images/wheat.png';
 
-export default function PopulationSection(props) {
+export default function PopulationSection(props: any) {
 
   var population = props.population;
   var logs = props.logs;
   var ores = props.ores;
   var wheats = props.wheats;
-
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   const card = (
     <React.Fragment>

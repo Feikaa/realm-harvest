@@ -1,19 +1,23 @@
 import * as React from 'react';
 import './TabSection.css';
 import { Box, Card, Tabs, CardContent, Tab, Typography, createTheme, ThemeProvider, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import setBodyColor from '../setBodyColor';
 
-export default function PopulationSection(props) {
+export default function RealmsSection(props: any) {
 
     var areas = props.areas;
     var area = props.area;
     var setArea = props.setArea;
 
-    const handleChange = (value) => {
+    var colors = ["#243407", "#5A5A5A", "#009E60", "#df915e", "#2f37aa", "#7e0000", "#7e7e00", "#80CCCC", "#678e99", "#4c00a4"];
+
+    const handleChange = (value: number) => {
         setArea(value);
+        setBodyColor(colors[value - 1]);
       };
 
     return (
-        <Box sx={{ width: '100%'}}>
+        <Box sx={{ height: 672, width: '100%'}}>
             <List>
                 <ListItem>
                     <ListItemButton sx={{bgcolor: '#006400', borderRadius: '16px'}} disabled={area === 1 ? true : false} onClick={() => {handleChange(1)}}>

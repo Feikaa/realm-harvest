@@ -1,7 +1,9 @@
 import * as React from 'react';
 import './TabSection.css';
 import { Box, Card, Tabs, CardContent, Tab, Typography, createTheme, ThemeProvider } from '@mui/material';
-import AreaSection from './AreaSection.tsx';
+import RealmsSection from './RealmsSection';
+import Upgrade1Section from './Upgrade1Section';
+import AllocationSection from './AllocationSection';
 
 function a11yProps(index: number) {
   return {
@@ -10,44 +12,49 @@ function a11yProps(index: number) {
   };
 }
 
-export default function PopulationSection(props) {
+export default function PopulationSection(props: any) {
 
   var population = props.population;
   var areas = props.areas;
   var area = props.area;
   var setArea = props.setArea;
+  var allocated = props.allocated;
+  var setAllocated = props.setAllocated;
+  var aPop = props.aPop;
+  var setAPop = props.setAPop;
 
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
   
     const theme = createTheme({
         palette: {
         primary: {
-            // Purple and green play nicely together.
+            // Green.
             main: '#11cb5f',
         },
         secondary: {
-            // This is green.A700 as hex.
-            main: '#11cb5f',
+            // White
+            main: '#FFFFFF',
         },
+
         },
     });
 
   const card = (
     <React.Fragment>
       <CardContent>
-        <Tabs value={value} centered onChange={handleChange} textColor='primary' indicatorColor='primary'>
+        <Tabs value={value} centered onChange={handleChange} textColor='primary' indicatorColor='primary' >
             <Tab label="Realms" {...a11yProps(0)}/>
             <Tab label="Upgrades" {...a11yProps(1)}/>
             <Tab label="Allocate Population" {...a11yProps(2)}/>
         </Tabs>
         <Typography variant="h4">
-          <br />
-          {value === 0 ? <AreaSection areas={areas} area={area} setArea={setArea} /> : ""}
+          {value === 0 ? <RealmsSection areas={areas} area={area} setArea={setArea} /> : 
+           value === 1 ? (area === 1 ? <Upgrade1Section /> : "") : 
+           <AllocationSection areas={areas} area={area} allocated={allocated} setAllocated={setAllocated} population={population} aPop={aPop} setAPop={setAPop} />}
         </Typography>
       </CardContent>
     </React.Fragment>
