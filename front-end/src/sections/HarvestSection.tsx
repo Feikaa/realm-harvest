@@ -18,11 +18,36 @@ export default function PopulationSection(props: any) {
   var progress = 0;
   var [p, setP] = useState(progress);
   var aPop = props.aPop;
+  var gains0 = props.gains0;
+  var setGains0 = props.setGains0;
+  var gains1 = props.gains1;
+  var setGains1 = props.setGains1;
+  var gains2 = props.gains2;
+  var setGains2 = props.setGains2;
+  var gains3 = props.gains3;
+  var setGains3 = props.setGains3;
+  var gains4 = props.gains4;
+  var setGains4 = props.setGains4;
+  var gains5 = props.gains5;
+  var setGains5 = props.setGains5;
+  var gains6 = props.gains6;
+  var setGains6 = props.setGains6;
+  var gains7 = props.gains7;
+  var setGains7 = props.setGains7;
+  var gains8 = props.gains8;
+  var setGains8 = props.setGains8;
+  var gains9 = props.gains9;
+  var setGains9 = props.setGains9;
+  var gains = [gains0, gains1, gains2, gains3, gains4, gains5, gains6, gains7, gains8, gains9];
+  var setGains = [setGains0, setGains1, setGains2, setGains3, setGains4, setGains5, setGains6, setGains7, setGains8, setGains9];
+
+  var allocated = props.allocated;
 
   var interval = useRef<any>();
 
   const handleHarvest = (area: number) => {
-    setResources[area](resources[area] + 1);
+    setResources[area]((resource: any) => resource + 1);
+    setGains[area]((gain: any) => gain + 1)
   } 
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -55,6 +80,16 @@ export default function PopulationSection(props: any) {
       }, 500);
     }
   }, [aPop])
+
+  useEffect(() => {
+    if (p == 100) {
+      for (let i = 0; i < allocated.length; i++) {
+        if (allocated[i] > 0) {
+          handleHarvest(i);
+        }
+      }
+    }
+  }, [p])
 
   // useEffect(() => {
   //   if (aPop === population) {

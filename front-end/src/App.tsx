@@ -25,6 +25,10 @@ export default function App() {
         setBackendData(data);
       }
     )
+
+    setInterval(() => {
+
+    })
   }, [])
 
   var [population, setPopulation] = useState(100);
@@ -36,6 +40,17 @@ export default function App() {
   var [area, setArea] = useState(1);
   var [axe, setAxe] = useState(false);
   var [allocated, setAllocated] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const [gains0, setGains0] = useState(0);
+  const [gains1, setGains1] = useState(0);
+  const [gains2, setGains2] = useState(0);
+  const [gains3, setGains3] = useState(0);
+  const [gains4, setGains4] = useState(0);
+  const [gains5, setGains5] = useState(0);
+  const [gains6, setGains6] = useState(0);
+  const [gains7, setGains7] = useState(0);
+  const [gains8, setGains8] = useState(0);
+  const [gains9, setGains9] = useState(0);
+  var [time, setTime] = useState([0,0,0,0,0,0,0,0,0,0]);
 
   return (
     <div className='App'>
@@ -54,8 +69,30 @@ export default function App() {
             <TabSection areas={areas} area={area} setArea={setArea} allocated={allocated} population={population} setPopulation={setPopulation} setAllocated={setAllocated} aPop={aPop} setAPop={setAPop} />
           </Grid>
           <Grid item xs={8}>
-            <HarvestSection population={population} setPopulation={setPopulation} area={area} logs={logs} setLogs={setLogs} ores={ores} setOres={setOres} wheats={wheats} setWheats={setWheats} axe={axe} aPop={aPop} />
-            <ResourceSection logs={logs} ores={ores} wheats={wheats} />
+            <HarvestSection population={population} setPopulation={setPopulation} area={area} logs={logs} setLogs={setLogs} ores={ores} setOres={setOres} wheats={wheats} setWheats={setWheats} axe={axe} aPop={aPop} allocated={allocated}
+            gains0={gains0} setGains0={setGains0}
+            gains1={gains1} setGains1={setGains1}
+            gains2={gains2} setGains2={setGains2}
+            gains3={gains3} setGains3={setGains3}
+            gains4={gains4} setGains4={setGains4}
+            gains5={gains5} setGains5={setGains5}
+            gains6={gains6} setGains6={setGains6}
+            gains7={gains7} setGains7={setGains7}
+            gains8={gains8} setGains8={setGains8}
+            gains9={gains9} setGains9={setGains9}
+            time={time} setTime={setTime} />
+            <ResourceSection logs={logs} ores={ores} wheats={wheats}
+            gains0={gains0} setGains0={setGains0}
+            gains1={gains1} setGains1={setGains1}
+            gains2={gains2} setGains2={setGains2}
+            gains3={gains3} setGains3={setGains3}
+            gains4={gains4} setGains4={setGains4}
+            gains5={gains5} setGains5={setGains5}
+            gains6={gains6} setGains6={setGains6}
+            gains7={gains7} setGains7={setGains7}
+            gains8={gains8} setGains8={setGains8}
+            gains9={gains9} setGains9={setGains9}
+            time={time} />
           </Grid>
         </Grid>
       </Box>

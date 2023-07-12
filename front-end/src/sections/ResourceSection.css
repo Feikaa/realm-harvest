@@ -1,3 +1,16 @@
 .Resource {
     min-width: 275;
 }
+
+.display {
+    animation: showing 1s
+}
+
+@keyframes showing {
+    0% {
+        visibility: visible;
+    }
+    100% {
+        visibility: hidden;
+    }
+}
