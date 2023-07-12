@@ -118,11 +118,20 @@ function rowContent(_index: number, row: Data) {
   );
 }
 
-export default function ReactVirtualizedTable() {
+export default function Upgrade1Section(props: any) {
+
+  var population = props.population;
+  var setPopulation = props.setPopulation;
+  var aPop = props.aPop;
+  var setAPop = props.setAPop;
+
   return (
     <Paper style={{ height: 672, width: '100%' }}>
       <List>
-        <Button>
+        <Button onClick={() => {
+          setPopulation(population + 10);
+          setAPop(aPop + 10);
+        }}>
           Axe
           <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
               <React.Fragment>

@@ -15,6 +15,7 @@ function a11yProps(index: number) {
 export default function PopulationSection(props: any) {
 
   var population = props.population;
+  var setPopulation = props.setPopulation;
   var areas = props.areas;
   var area = props.area;
   var setArea = props.setArea;
@@ -53,7 +54,7 @@ export default function PopulationSection(props: any) {
         </Tabs>
         <Typography variant="h4">
           {value === 0 ? <RealmsSection areas={areas} area={area} setArea={setArea} /> : 
-           value === 1 ? (area === 1 ? <Upgrade1Section /> : "") : 
+           value === 1 ? (area === 1 ? <Upgrade1Section population={population} setPopulation={setPopulation} aPop={aPop} setAPop={setAPop} /> : "") : 
            <AllocationSection areas={areas} area={area} allocated={allocated} setAllocated={setAllocated} population={population} aPop={aPop} setAPop={setAPop} />}
         </Typography>
       </CardContent>

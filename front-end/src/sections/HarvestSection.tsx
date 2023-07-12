@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Box, Card, CardActions, CardContent, Button, Typography, LinearProgress, linearProgressClasses, styled } from '@mui/material';
 import Tree from '../images/tree.png';
 import IconHandBackFist from '../icons/IconHandBackFist';
@@ -15,6 +15,11 @@ export default function PopulationSection(props: any) {
   var setPopulation = props.setPopulation;
   var area = props.area;
   var axe = props.axe;
+  var progress = 0;
+  var [p, setP] = useState(progress);
+  var aPop = props.aPop;
+
+  var interval = useRef<any>();
 
   const handleHarvest = (area: number) => {
     setResources[area](resources[area] + 1);
@@ -32,6 +37,34 @@ export default function PopulationSection(props: any) {
     },
   }));
 
+  useEffect(() => {
+    if (interval.current && aPop === population) {
+      clearInterval(interval.current);
+      interval.current = null;
+      progress = 0;
+      setP(0);
+    }
+    else if (!interval.current && aPop < population) {
+      interval.current = setInterval(() => {
+        if (progress < 100) {
+          progress += 20;
+        } else {
+          progress = 0;
+        }
+        setP(progress);
+      }, 500);
+    }
+  }, [aPop])
+
+  // useEffect(() => {
+  //   if (aPop === population) {
+  //     clearInterval(interval)
+  //     interval = null;
+  //   } else {
+  //     setProgress(100);
+  //   }
+  // }, [aPop])
+
   const card = (
     <React.Fragment>
       <CardContent>
@@ -39,9 +72,9 @@ export default function PopulationSection(props: any) {
           Harvest
         </Typography>
         <Typography>
-          Auto
-          <BorderLinearProgress variant='determinate' value={50} sx={{ maxWidth: '25%' }} style={{ marginLeft: "37.5%"}} />
-          Travelling...
+          {aPop === population ? "Idle" : "Auto"}
+          <BorderLinearProgress variant='determinate' value={p} sx={{ maxWidth: '25%' }} style={{ marginLeft: "37.5%"}} />
+          {aPop === population ? "" : p < 40 ? "Travelling..." : p < 80 ? "Collecting..." : "Returning..."}
         </Typography>
         <Typography>
             <br />

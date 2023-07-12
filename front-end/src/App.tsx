@@ -51,10 +51,10 @@ export default function App() {
         <Grid container spacing={2} alignItems="stretch" direction="row" maxHeight="100vh">
           <Grid item xs={4}>
             <PopulationSection population={population} aPop={aPop} />
-            <TabSection areas={areas} area={area} setArea={setArea} allocated={allocated} population={population} setAllocated={setAllocated} aPop={aPop} setAPop={setAPop} />
+            <TabSection areas={areas} area={area} setArea={setArea} allocated={allocated} population={population} setPopulation={setPopulation} setAllocated={setAllocated} aPop={aPop} setAPop={setAPop} />
           </Grid>
           <Grid item xs={8}>
-            <HarvestSection population={population} setPopulation={setPopulation} area={area} logs={logs} setLogs={setLogs} ores={ores} setOres={setOres} wheats={wheats} setWheats={setWheats} axe={axe}/>
+            <HarvestSection population={population} setPopulation={setPopulation} area={area} logs={logs} setLogs={setLogs} ores={ores} setOres={setOres} wheats={wheats} setWheats={setWheats} axe={axe} aPop={aPop} />
             <ResourceSection logs={logs} ores={ores} wheats={wheats} />
           </Grid>
         </Grid>
