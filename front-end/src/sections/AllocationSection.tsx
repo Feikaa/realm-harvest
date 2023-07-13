@@ -12,7 +12,7 @@ export default function AllocationSection(props: any) {
     var aPop = props.aPop;
     var setAPop = props.setAPop;
 
-    var areaList = ["Forest", "Mountains", "Plains", "Desert", "Ocean", "Volcano", "Swamp", "Sky Islands", "Tundra", "Enchanted Grove"];
+    var areaList = ["Forest", "Mountains", "Plains", "Ocean", "Desert", "Tundra", "Volcano", "Ruins", "Sky Islands", "Enchanted Grove"];
 
       const listAreas = areaList.map((area, i) => {
         if (areas.includes(area.toLowerCase())) {

@@ -11,9 +11,8 @@ export default function AllocationCard(props: any) {
     var aPop = props.aPop;
     var setAPop = props.setAPop;
 
-    var areaList = ["Forest", "Mountains", "Plains", "Desert", "Ocean", "Volcano", "Swamp", "Sky Islands", "Tundra", "Enchanted Grove"];
-    var areaColor = ["#006400", "#313232", "#90ee90", "#ffffe0", "#0000ff", "#8b0000", "#556b2f", "#00bfff", "#32476b", "#800080"];
-    var BTAreas = [3, 4, 7, 8]
+    var areaColor = ["#006400", "#313232", "#90ee90", "#0000ff", "#ffffe0", "#32476b", "#8b0000", "#556b2f", "#00bfff", "#800080"];
+    var BTAreas = [3, 5, 8, 9]
 
     const handleAllocate = (sign: any, index: any) => {
         if (sign === "all") {

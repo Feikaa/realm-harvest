@@ -9,7 +9,7 @@ export default function RealmsSection(props: any) {
     var area = props.area;
     var setArea = props.setArea;
 
-    var colors = ["#243407", "#5A5A5A", "#009E60", "#df915e", "#2f37aa", "#7e0000", "#7e7e00", "#80CCCC", "#678e99", "#4c00a4"];
+    var colors = ["#243407", "#5A5A5A", "#009E60", "#2f37aa", "#df915e", "#80CCCC", "#7e0000", "#7e7e00", "#678e99", "#4c00a4"];
 
     const handleChange = (value: number) => {
         setArea(value);
@@ -38,38 +38,38 @@ export default function RealmsSection(props: any) {
                 </ListItem>
 
                 <ListItem sx={{ visibility: areas.length >= 4 ? 'visible' : 'hidden' }}>
-                    <ListItemButton sx={{bgcolor: '#ffffe0', borderRadius: '16px'}} disabled={area === 4 ? true : false} onClick={() => {handleChange(4)}}>
-                        <ListItemText sx={{color: 'black'}} primary="4. Desert" />
+                    <ListItemButton sx={{bgcolor: '#0000ff', borderRadius: '16px'}} disabled={area === 4 ? true : false} onClick={() => {handleChange(4)}}>
+                        <ListItemText sx={{color: 'white'}} primary="4. Ocean" />
                     </ListItemButton>
                 </ListItem>
 
                 <ListItem sx={{ visibility: areas.length >= 5 ? 'visible' : 'hidden' }}>
-                    <ListItemButton sx={{bgcolor: '#0000ff', borderRadius: '16px'}} disabled={area === 5 ? true : false} onClick={() => {handleChange(5)}}>
-                        <ListItemText sx={{color: 'white'}} primary="5. Ocean" />
+                    <ListItemButton sx={{bgcolor: '#ffffe0', borderRadius: '16px'}} disabled={area === 5 ? true : false} onClick={() => {handleChange(5)}}>
+                        <ListItemText sx={{color: 'black'}} primary="5. Desert" />
                     </ListItemButton>
                 </ListItem>
 
                 <ListItem sx={{ visibility: areas.length >= 6 ? 'visible' : 'hidden' }}>
-                    <ListItemButton sx={{bgcolor: '#8b0000', borderRadius: '16px'}} disabled={area === 6 ? true : false} onClick={() => {handleChange(6)}}>
-                        <ListItemText sx={{color: 'white'}} primary="6. Volcano" />
+                    <ListItemButton sx={{bgcolor: '#32476b', borderRadius: '16px'}} disabled={area === 6 ? true : false} onClick={() => {handleChange(6)}}>
+                        <ListItemText sx={{color: 'white'}} primary="6. Tundra" />
                     </ListItemButton>
                 </ListItem>
 
                 <ListItem sx={{ visibility: areas.length >= 7 ? 'visible' : 'hidden' }}>
-                    <ListItemButton sx={{bgcolor: '#556b2f', borderRadius: '16px'}} disabled={area === 7 ? true : false} onClick={() => {handleChange(7)}}>
-                        <ListItemText sx={{color: 'black'}} primary="7. Swamp" />
+                    <ListItemButton sx={{bgcolor: '#8b0000', borderRadius: '16px'}} disabled={area === 7 ? true : false} onClick={() => {handleChange(7)}}>
+                        <ListItemText sx={{color: 'white'}} primary="7. Volcano" />
                     </ListItemButton>
                 </ListItem>
 
                 <ListItem sx={{ visibility: areas.length >= 8 ? 'visible' : 'hidden' }}>
-                    <ListItemButton sx={{bgcolor: '#00bfff', borderRadius: '16px'}} disabled={area === 8 ? true : false} onClick={() => {handleChange(8)}}>
-                        <ListItemText sx={{color: 'black'}} primary="8. Sky Islands" />
+                    <ListItemButton sx={{bgcolor: '#556b2f', borderRadius: '16px'}} disabled={area === 8 ? true : false} onClick={() => {handleChange(8)}}>
+                        <ListItemText sx={{color: 'black'}} primary="8. Ruins" />
                     </ListItemButton>
                 </ListItem>
 
                 <ListItem sx={{ visibility: areas.length >= 9 ? 'visible' : 'hidden' }}>
-                    <ListItemButton sx={{bgcolor: '#32476b', borderRadius: '16px'}} disabled={area === 9 ? true : false} onClick={() => {handleChange(9)}}>
-                        <ListItemText sx={{color: 'white'}} primary="9. Tundra" />
+                    <ListItemButton sx={{bgcolor: '#00bfff', borderRadius: '16px'}} disabled={area === 9 ? true : false} onClick={() => {handleChange(9)}}>
+                        <ListItemText sx={{color: 'black'}} primary="9. Sky Islands" />
                     </ListItemButton>
                 </ListItem>
 

@@ -4,6 +4,7 @@ import PopulationSection from './sections/PopulationSection';
 import HarvestSection from './sections/HarvestSection';
 import TabSection from './sections/TabSection';
 import ResourceSection from './sections/ResourceSection';
+import FooterSection from './sections/FooterSection';
 import { Box, Grid } from '@mui/material';
 import setBodyColor from './setBodyColor'
 import React, { useEffect, useState } from 'react';
@@ -36,7 +37,15 @@ export default function App() {
   var [logs, setLogs] = useState(0);
   var [ores, setOres] = useState(0);
   var [wheats, setWheats] = useState(0);
-  var [areas, setAreas] = useState(["forest", "mountains", "plains", "desert", "ocean", "volcano", "swamp", "sky islands", "tundra", "enchanted grove"]);
+  var [waters, setWaters] = useState(0);
+  var [fires, setFires] = useState(0);
+  var [ices, setIces] = useState(0);
+  var [volcanos, setVolcanos] = useState(0);
+  var [runes, setRunes] = useState(0);
+  var [crystals, setCrystals] = useState(0);
+  var [essences, setEssences] = useState(0);
+  // Unlocked areas
+  var [areas, setAreas] = useState(["forest", "mountains", "plains", "ocean", "desert", "tundra", "volcano", "ruins", "sky islands", "enchanted grove"]);
   var [area, setArea] = useState(1);
   var [axe, setAxe] = useState(false);
   var [allocated, setAllocated] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
@@ -69,7 +78,18 @@ export default function App() {
             <TabSection areas={areas} area={area} setArea={setArea} allocated={allocated} population={population} setPopulation={setPopulation} setAllocated={setAllocated} aPop={aPop} setAPop={setAPop} />
           </Grid>
           <Grid item xs={8}>
-            <HarvestSection population={population} setPopulation={setPopulation} area={area} logs={logs} setLogs={setLogs} ores={ores} setOres={setOres} wheats={wheats} setWheats={setWheats} axe={axe} aPop={aPop} allocated={allocated}
+            <HarvestSection population={population} setPopulation={setPopulation} area={area}
+            logs={logs} setLogs={setLogs}
+            ores={ores} setOres={setOres}
+            wheats={wheats} setWheats={setWheats}
+            waters={waters} setWaters={setWaters}
+            fires={fires} setFires={setFires}
+            ices={ices} setIces={setIces}
+            volcanos={volcanos} setVolcanos={setVolcanos}
+            runes={runes} setRunes={setRunes}
+            crystals={crystals} setCrystals={setCrystals}
+            essences={essences} setEssences={setEssences}
+            axe={axe} aPop={aPop} allocated={allocated}
             gains0={gains0} setGains0={setGains0}
             gains1={gains1} setGains1={setGains1}
             gains2={gains2} setGains2={setGains2}
@@ -81,7 +101,18 @@ export default function App() {
             gains8={gains8} setGains8={setGains8}
             gains9={gains9} setGains9={setGains9}
             time={time} setTime={setTime} />
-            <ResourceSection logs={logs} ores={ores} wheats={wheats}
+            <ResourceSection
+            logs={logs}
+            ores={ores}
+            wheats={wheats}
+            waters={waters}
+            fires={fires}
+            ices={ices}
+            volcanos={volcanos}
+            runes={runes}
+            crystals={crystals}
+            essences={essences}
+            areas={areas}
             gains0={gains0} setGains0={setGains0}
             gains1={gains1} setGains1={setGains1}
             gains2={gains2} setGains2={setGains2}
@@ -95,6 +126,7 @@ export default function App() {
             time={time} />
           </Grid>
         </Grid>
+        {/* <FooterSection /> */}
       </Box>
     </div>
   );

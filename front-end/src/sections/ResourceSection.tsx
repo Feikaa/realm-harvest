@@ -4,6 +4,13 @@ import { Box, Card, Tabs, CardContent, Tab, Typography, Stack } from '@mui/mater
 import Log from '../images/log.png';
 import Ore from '../images/ore.png';
 import Wheat from '../images/wheat.png';
+import Water from '../images/water_gem.png';
+import Fire from '../images/fire_gem.png';
+import Ice from '../images/ice_gem.png';
+import Volcano from '../images/volcano_ore.png';
+import Inscription from '../images/inscription.png';
+import Sky from '../images/sky_gem.png';
+import Essence from '../images/magic_essence.png';
 
 interface TextDisplayProps {
   gain: number;
@@ -33,9 +40,6 @@ const TextDisplay: React.FC<TextDisplayProps> = ({ gain, setGain }) => {
 export default function PopulationSection(props: any) {
 
   var population = props.population;
-  var logs = props.logs;
-  var ores = props.ores;
-  var wheats = props.wheats;
   var gains0 = props.gains0;
   var setGains0 = props.setGains0;
   var gains1 = props.gains1;
@@ -59,8 +63,10 @@ export default function PopulationSection(props: any) {
   let [shouldTransition, setShouldTransition] = useState(true);
   var gains = [gains0, gains1, gains2, gains3, gains4, gains5, gains6, gains7, gains8, gains9];
   var setGains = [setGains0, setGains1, setGains2, setGains3, setGains4, setGains5, setGains6, setGains7, setGains8, setGains9];
-  var resources = [logs, ores, wheats];
-  var pics = [Log, Ore, Wheat];
+  var resources = [props.logs, props.ores, props.wheats, props.waters, props.fires, props.ices, props.volcanos, props.runes, props.crystals, props.essences];
+  var pics = [Log, Ore, Wheat, Water, Fire, Ice, Volcano, Inscription, Sky, Essence];
+
+  var areas = props.areas;
 
   const [texts, setTexts] = useState<string[]>([]);
 
@@ -82,9 +88,9 @@ export default function PopulationSection(props: any) {
           <Stack direction="row" spacing={2}>
             {gains.map((gain: any, index: any) => {
               return (
-                <Box sx={{ marginTop: "-60px !important" }}>
+                <Box sx={{ marginTop: "-60px !important", display: areas.length > index ? "" : "none" }}>
                 <TextDisplay gain={gain} setGain={setGains[index]} />
-                <img src={pics[index]} width="64px" height="64px" />x{resources[index]}&nbsp;&nbsp;
+                <img src={pics[index]} width="64px" height="64px" />x{resources[index] || 0}&nbsp;&nbsp;
                 </Box>
 )
             })}

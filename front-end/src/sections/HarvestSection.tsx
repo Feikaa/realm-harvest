@@ -8,8 +8,8 @@ import IconSickle from '../icons/IconSickle';
 
 export default function PopulationSection(props: any) {
 
-  var resources = [props.logs, props.ores, props.wheats];
-  var setResources = [props.setLogs, props.setOres, props.setWheats];
+  var resources = [props.logs, props.ores, props.wheats, props.waters, props.fires, props.ices, props.volcanos, props.runes, props.crystals, props.essences];
+  var setResources = [props.setLogs, props.setOres, props.setWheats, props.setWaters, props.setFires, props.setIces, props.setVolcanos, props.setRunes, props.setCrystals, props.setEssences];
 
   var population = props.population;
   var setPopulation = props.setPopulation;
