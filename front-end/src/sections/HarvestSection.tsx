@@ -1,54 +1,96 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Card, CardActions, CardContent, Button, Typography, LinearProgress, linearProgressClasses, styled } from '@mui/material';
-import Tree from '../images/tree.png';
+import { Box, Card, CardActions, CardContent, Button, Typography, LinearProgress, linearProgressClasses, styled, Stack } from '@mui/material';
+import Forest from '../images/forest.png';
+import Mountain from '../images/mountains.png';
+import Plains from '../images/plains.png';
+import Ocean from '../images/ocean.png';
+import Desert from '../images/desert.png';
+import Tundra from '../images/tundra.png';
+import Volcano from '../images/volcano.png';
+import Ruins from '../images/ruins.png';
+import SkyIsland from '../images/sky_island.png';
+import EnchantedGrove from '../images/enchanted_grove.png';
 import IconHandBackFist from '../icons/IconHandBackFist';
 import IconAxe from '../icons/IconAxe';
 import IconPickaxe from '../icons/IconPickaxe';
 import IconSickle from '../icons/IconSickle';
+import IconTrap from '../images/trap.png';
 
 export default function PopulationSection(props: any) {
 
-  var resources = [props.logs, props.ores, props.wheats, props.waters, props.fires, props.ices, props.volcanos, props.runes, props.crystals, props.essences];
-  var setResources = [props.setLogs, props.setOres, props.setWheats, props.setWaters, props.setFires, props.setIces, props.setVolcanos, props.setRunes, props.setCrystals, props.setEssences];
+  const resources = props.resources;
+  const setResources = props.setResources;
+
+  const items = props.items;
+  const setItems = props.setItems;
 
   var population = props.population;
   var setPopulation = props.setPopulation;
   var area = props.area;
   var axe = props.axe;
   var progress = 0;
-  var [p, setP] = useState(progress);
+  var tProgress = 0;
+  const [p, setP] = useState(progress);
+  const [t, setT] = useState(tProgress);
+  const [harvest, setHarvest] = useState(0);
+  const [trap, setTrap] = useState(false);
   var aPop = props.aPop;
-  var gains0 = props.gains0;
-  var setGains0 = props.setGains0;
-  var gains1 = props.gains1;
-  var setGains1 = props.setGains1;
-  var gains2 = props.gains2;
-  var setGains2 = props.setGains2;
-  var gains3 = props.gains3;
-  var setGains3 = props.setGains3;
-  var gains4 = props.gains4;
-  var setGains4 = props.setGains4;
-  var gains5 = props.gains5;
-  var setGains5 = props.setGains5;
-  var gains6 = props.gains6;
-  var setGains6 = props.setGains6;
-  var gains7 = props.gains7;
-  var setGains7 = props.setGains7;
-  var gains8 = props.gains8;
-  var setGains8 = props.setGains8;
-  var gains9 = props.gains9;
-  var setGains9 = props.setGains9;
-  var gains = [gains0, gains1, gains2, gains3, gains4, gains5, gains6, gains7, gains8, gains9];
-  var setGains = [setGains0, setGains1, setGains2, setGains3, setGains4, setGains5, setGains6, setGains7, setGains8, setGains9];
+
+  var areas = [Forest, Tundra, Mountain, Plains, Desert, Ruins, Ocean, Volcano, EnchantedGrove, SkyIsland];
 
   var allocated = props.allocated;
 
   var interval = useRef<any>();
+  var tInterval = useRef<any>();
 
-  const handleHarvest = (area: number) => {
-    setResources[area]((resource: any) => resource + 1);
-    setGains[area]((gain: any) => gain + 1)
+  // type = what kind of resource
+  const handleHarvest = (area: number, type: number, increase: number, mode: string) => {
+    if (harvest >= 4 || mode === "auto") {
+      if (mode != "auto") {
+        setHarvest(1);
+      }
+      setResources((prev: any) => {
+        const newResources = [...prev];
+        const resource = newResources[area].resources[type];
+  
+        const newQuantity = resource.quantity + increase;
+  
+        resource.gain += increase;
+        resource.quantity = newQuantity;
+  
+        return newResources;
+      });
+      if (type === 0 && Math.floor(Math.random() * 10) <= 2) {
+        setResources((prev: any) => {
+          const newResources = [...prev];
+          const resource = newResources[area].resources[1];
+    
+          const newQuantity = resource.quantity + increase;
+    
+          resource.gain += increase;
+          resource.quantity = newQuantity;
+    
+          return newResources;
+        });
+      }
+    } else {
+      setHarvest((harvest) => harvest + 1);
+    }
   } 
+
+  const handleTrap = (item: number) => {
+    setItems((prev: any) => {
+      const newItems = [...prev];
+      const tempItem = newItems[item];
+
+      const newQuantity = tempItem.quantity - 1;
+
+      tempItem.quantity = newQuantity;
+
+      return newItems;
+    })
+    setTrap(true);
+  }
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 18,
@@ -85,11 +127,27 @@ export default function PopulationSection(props: any) {
     if (p == 100) {
       for (let i = 0; i < allocated.length; i++) {
         if (allocated[i] > 0) {
-          handleHarvest(i);
+          for (let j = 0; j < resources[i].resources.length; j++) {
+            handleHarvest(i, j, Math.floor((allocated[i] / population) * (1/(j+1)) *  allocated[i]), "auto");
+          }
         }
       }
     }
   }, [p])
+
+  useEffect(() => {
+    if (trap) {
+      tInterval.current = setInterval(() => {
+        if (tProgress < 100) {
+          tProgress += 20;
+          setT(tProgress);
+        } else {
+          clearInterval(tInterval.current);
+          tInterval.current = null;
+        }
+      }, 1000)
+    }
+  }, [trap])
 
   // useEffect(() => {
   //   if (aPop === population) {
@@ -113,13 +171,31 @@ export default function PopulationSection(props: any) {
         </Typography>
         <Typography>
             <br />
-            <img src={Tree} width="512px" height="512px"></img>
+            <img src={areas[area - 1]} width="1024px" height="512px"></img>
         </Typography>
         <Typography variant="h4">
           <br />
-          <Button variant="contained" color="success" disableRipple onClick={() => {handleHarvest(area - 1)}}>
-            {area === 3 ? <IconSickle /> : area === 2 ? <IconPickaxe /> : axe ? <IconAxe /> : <IconHandBackFist />}&nbsp;&nbsp;Harvest
-          </Button>
+          <Stack direction="row" spacing={2} justifyContent="center">
+            <Box>
+              <Box sx={{ paddingBottom: '1%' }}>
+                <BorderLinearProgress value={(harvest/4) * 100} variant='determinate' />
+              </Box>
+              <Button variant="contained" color="success" disableRipple onClick={() => {handleHarvest(area - 1, 0, 1, "")}}>
+                {area === 3 ? <IconSickle /> : area === 2 ? <IconPickaxe /> : axe ? <IconAxe /> : <IconHandBackFist />}&nbsp;&nbsp;Harvest
+              </Button>
+            </Box>
+            <Box>
+              <BorderLinearProgress value={t} variant='determinate' />
+              <Button variant="contained" color="success" disableRipple disabled={items[0].quantity > 0 && trap === false ? false : t === 100 ? false : true} onClick={t < 100 ? () => {handleTrap(0)} : () => {
+                handleHarvest(0, 2, 2 + Math.floor(Math.random() * 4), "auto");
+                tProgress = 0;
+                setT(tProgress);
+                setTrap(false);
+              }}>
+                {t < 100 ? <React.Fragment>Set Trap(1x <img src={IconTrap} height="48px" width="48px" />)</React.Fragment> : <React.Fragment><IconHandBackFist />&nbsp;&nbsp;Collect</React.Fragment>}
+              </Button>
+            </Box>
+          </Stack>
         </Typography>
       </CardContent>
     </React.Fragment>

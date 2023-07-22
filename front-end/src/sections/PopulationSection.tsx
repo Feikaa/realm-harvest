@@ -1,6 +1,7 @@
 import * as React from 'react';
 import './PopulationSection.css';
-import { Box, Card, CardActions, CardContent, Button, Typography} from '@mui/material';
+import { Box, Card, CardActions, CardContent, Button } from '@mui/material';
+import {LinearProgress, Typography} from '@mui/joy';
 
 export default function PopulationSection(props: any) {
 
@@ -10,12 +11,16 @@ export default function PopulationSection(props: any) {
   const card = (
     <React.Fragment>
       <CardContent>
-        <Typography variant="h3" component="div">
+        <Typography level="h1" component="div">
           Population
         </Typography>
-        <Typography variant="h4">
+        <Typography>
           <br />
-          {population} ({aPop})
+          <LinearProgress determinate value={(aPop/population) * 100} thickness={50} color='success' variant="outlined" sx={{ '--LinearProgress-radius': '0px' }}>
+            <Typography sx={{ mixBlendMode: 'hard-light' }} fontWeight="xl" level='h3' textColor="common.black">
+              {aPop} / {population}
+            </Typography>
+          </LinearProgress>
         </Typography>
       </CardContent>
     </React.Fragment>

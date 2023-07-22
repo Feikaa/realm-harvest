@@ -2,10 +2,11 @@ import * as React from 'react';
 import {AppBar, Box, Toolbar, Typography, Button, Tooltip, styled, TooltipProps, tooltipClasses} from '@mui/material';
 import LoginPopup from "../popups/LoginPopup";
 
-export default function HeaderSection() {
+export default function HeaderSection(props: any) {
 
   var [openLogin, setOpenLogin] = React.useState(false);
-  var [authenticated, setAuthenticated] = React.useState(false);
+  const authenticated = props.authenticated;
+  const setAuthenticated = props.setAuthenticated;
 
   const handleCloseLogin = () => { setOpenLogin(false); };
   const handleSubmitLogin = (username: string, password: string) => {

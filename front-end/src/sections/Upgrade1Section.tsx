@@ -11,6 +11,7 @@ import Log from '../images/log.png';
 import Ore from '../images/ore.png';
 import Wheat from '../images/wheat.png';
 import { Box, Button, Grid, List } from '@mui/material';
+import IconTrap from '../images/trap.png';
 
 interface Data {
   id: number;
@@ -125,23 +126,73 @@ export default function Upgrade1Section(props: any) {
   var aPop = props.aPop;
   var setAPop = props.setAPop;
 
+  const resources = props.resources;
+  const setResources = props.setResources;
+
+  const items = props.items;
+  const setItems = props.setItems;
+
   return (
     <Paper style={{ height: 672, width: '100%' }}>
       <List>
-        <Button onClick={() => {
-          setPopulation(population + 10);
-          setAPop(aPop + 10);
-        }}>
-          Axe
-          <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-              <React.Fragment>
-              <Box sx={{border: 1, width: "70px"}}>
-                <img src={Log} alt="Air Rune Amount" height="64" width="64"></img>
-                200
-              </Box>
-              </React.Fragment>
-          </Grid>
-        </Button>
+        <Box sx={{paddingTop: "1%" }}>
+          <Button onClick={() => {
+            setItems((prev: any) => {
+              const newItems = [...prev];
+              const tempItem = newItems[0];
+        
+              const newQuantity = tempItem.quantity + 1;
+        
+              tempItem.quantity = newQuantity;
+        
+              return newItems;
+            });
+            setResources((prev: any) => {
+              const newResources = [...prev];
+              const resource = newResources[0].resources[0];
+        
+              const newQuantity = resource.quantity - 200;
+        
+              resource.gain -= 200;
+              resource.quantity = newQuantity;
+        
+              return newResources;
+            })
+          }}
+          variant="contained" sx={{ width: "80%" }}
+          color='info'
+          disabled={resources[0].resources[0].quantity >= 200 ? false : true}>
+            Animal Trap
+            <img src={IconTrap} alt="Trap Icon" />x{items[0].quantity}
+            <Grid container spacing={0} direction="row" alignItems="center" justifyContent="right">
+                <React.Fragment>
+                <Box sx={{border: 1, width: "70px"}}>
+                  <img src={Log} alt="Log" height="48" width="48"></img>
+                  200
+                </Box>
+                </React.Fragment>
+            </Grid>
+          </Button>
+        </Box>
+
+        <Box sx={{paddingTop: "1%" }}>
+          <Button onClick={() => {
+            setPopulation(population + 10);
+            setAPop(aPop + 10);
+          }}
+          variant="contained" sx={{ width: "80%" }}
+          color='info'>
+            Axe
+            <Grid container spacing={0} direction="row" alignItems="center" justifyContent="right">
+                <React.Fragment>
+                <Box sx={{border: 1, width: "70px"}}>
+                  <img src={Log} alt="Log" height="48" width="48"></img>
+                  200
+                </Box>
+                </React.Fragment>
+            </Grid>
+          </Button>
+        </Box>
       </List>
     </Paper>
   );

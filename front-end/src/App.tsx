@@ -34,32 +34,123 @@ export default function App() {
 
   var [population, setPopulation] = useState(100);
   var [aPop, setAPop] = useState(population);
-  var [logs, setLogs] = useState(0);
-  var [ores, setOres] = useState(0);
-  var [wheats, setWheats] = useState(0);
-  var [waters, setWaters] = useState(0);
-  var [fires, setFires] = useState(0);
-  var [ices, setIces] = useState(0);
-  var [volcanos, setVolcanos] = useState(0);
-  var [runes, setRunes] = useState(0);
-  var [crystals, setCrystals] = useState(0);
-  var [essences, setEssences] = useState(0);
+  // // Wood, Fur, Berries
+  // var [forestR, setforestR] = useState([0,0,0]);
+  // // Frost Crystal, Thick Fur
+  // var [tundraR, setTundraR] = useState([0,0]);
+  // // Agrium, Feathers, Fresh Snow
+  // var [mountainsR, setMountainsR] = useState([0,0,0]);
+  // // Wheat, Meat, Herbs
+  // var [plainsR, setPlainsR] = useState([0,0,0]);
+  // // Fire Gem, Chitin
+  // var [desertR, setDesertR] = useState([0,0]);
+  // // Inscription, Runes
+  // var [ruinsR, setRuinsR] = useState([0,0]);
+  // // Water Gem, Fish, Salt
+  // var [oceanR, setOceanR] = useState(0);
+  // // Infernum, Volcanic Ash
+  // var [volcanoR, setVolcanoR] = useState([0,0]);
+  // // Essence, Fairy Dust
+  // var [groveR, setGroveR] = useState([0,0]);
+  // // 
+  // var [skyR, setSkyR] = useState(0);
+
+  const resourcesArray = [
+    {
+      area: "forest",
+      resources: [
+        { resource: "wood", gain: 0, quantity: 0 },
+        { resource: "berries", gain: 0, quantity: 0 },
+        { resource: "fur", gain: 0, quantity: 0 },
+      ],
+    },
+    {
+      area: "tundra",
+      resources: [
+        { resource: "ice_gem", gain: 0, quantity: 0 },
+        { resource: "thick_fur", gain: 0, quantity: 0 },
+      ],
+    },
+    {
+      area: "mountains",
+      resources: [
+        { resource: "ore", gain: 0, quantity: 0 },
+        { resource: "snow", gain: 0, quantity: 0 },
+        { resource: "feather", gain: 0, quantity: 0 },
+      ],
+    },
+    {
+      area: "plains",
+      resources: [
+        { resource: "wheat", gain: 0, quantity: 0 },
+        { resource: "herb", gain: 0, quantity: 0 },
+        { resource: "meat", gain: 0, quantity: 0 },
+      ],
+    },
+    {
+      area: "desert",
+      resources: [
+        { resource: "fire_gem", gain: 0, quantity: 0 },
+        { resource: "chitin", gain: 0, quantity: 0 },
+      ],
+    },
+    {
+      area: "ruins",
+      resources: [
+        { resource: "inscription", gain: 0, quantity: 0 },
+        { resource: "rune", gain: 0, quantity: 0 },
+      ],
+    },
+    {
+      area: "ocean",
+      resources: [
+        { resource: "water_gem", gain: 0, quantity: 0 },
+        { resource: "salt", gain: 0, quantity: 0 },
+        { resource: "fish", gain: 0, quantity: 0 },
+      ],
+    },
+    {
+      area: "volcano",
+      resources: [
+        { resource: "new_ore", gain: 0, quantity: 0 },
+        { resource: "ash", gain: 0, quantity: 0 },
+      ],
+    },
+    {
+      area: "grove",
+      resources: [
+        { resource: "essence", gain: 0, quantity: 0 },
+        { resource: "fairy_dust", gain: 0, quantity: 0 },
+      ],
+    },
+    {
+      area: "sky",
+      resources: [
+        { resource: "air_gem", gain: 0, quantity: 0 },
+      ],
+    },
+  ];
+
+  const [resources, setResources] = useState(resourcesArray);
+
+  const itemArray = [
+    {
+      item: "trap", quantity: 0,
+    },
+  ]
+
+  const [items, setItems] = useState(itemArray);
+
+  //console.log(resources[1].resources)
+
   // Unlocked areas
-  var [areas, setAreas] = useState(["forest", "mountains", "plains", "ocean", "desert", "tundra", "volcano", "ruins", "sky islands", "enchanted grove"]);
-  var [area, setArea] = useState(1);
-  var [axe, setAxe] = useState(false);
-  var [allocated, setAllocated] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-  const [gains0, setGains0] = useState(0);
-  const [gains1, setGains1] = useState(0);
-  const [gains2, setGains2] = useState(0);
-  const [gains3, setGains3] = useState(0);
-  const [gains4, setGains4] = useState(0);
-  const [gains5, setGains5] = useState(0);
-  const [gains6, setGains6] = useState(0);
-  const [gains7, setGains7] = useState(0);
-  const [gains8, setGains8] = useState(0);
-  const [gains9, setGains9] = useState(0);
-  var [time, setTime] = useState([0,0,0,0,0,0,0,0,0,0]);
+  const [areas, setAreas] = useState(["forest", "tundra", "mountains", "plains", "desert", "ruins", "ocean", "volcano", "enchanted grove", "sky islands"]);
+
+  const [authenticated, setAuthenticated] = useState(false);
+  const [area, setArea] = useState(1);
+  const [axe, setAxe] = useState(false);
+  const [allocated, setAllocated] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const [time, setTime] = useState([0,0,0,0,0,0,0,0,0,0]);
 
   return (
     <div className='App'>
@@ -71,58 +162,23 @@ export default function App() {
         ))
       )} */}
       <Box sx={{ flexGrow: 1 }}>
-        <HeaderSection />
+        <HeaderSection authenticated={authenticated} setAuthenticated={setAuthenticated} />
         <Grid container spacing={2} alignItems="stretch" direction="row" maxHeight="100vh">
           <Grid item xs={4}>
             <PopulationSection population={population} aPop={aPop} />
-            <TabSection areas={areas} area={area} setArea={setArea} allocated={allocated} population={population} setPopulation={setPopulation} setAllocated={setAllocated} aPop={aPop} setAPop={setAPop} />
+            <TabSection resources={resources} setResources={setResources} authenticated={authenticated} areas={areas} area={area} setArea={setArea}
+            allocated={allocated} population={population} setPopulation={setPopulation} setAllocated={setAllocated} aPop={aPop} setAPop={setAPop}
+            items={items} setItems={setItems} />
           </Grid>
           <Grid item xs={8}>
             <HarvestSection population={population} setPopulation={setPopulation} area={area}
-            logs={logs} setLogs={setLogs}
-            ores={ores} setOres={setOres}
-            wheats={wheats} setWheats={setWheats}
-            waters={waters} setWaters={setWaters}
-            fires={fires} setFires={setFires}
-            ices={ices} setIces={setIces}
-            volcanos={volcanos} setVolcanos={setVolcanos}
-            runes={runes} setRunes={setRunes}
-            crystals={crystals} setCrystals={setCrystals}
-            essences={essences} setEssences={setEssences}
+            resources={resources} setResources={setResources}
+            items={items} setItems={setItems}
             axe={axe} aPop={aPop} allocated={allocated}
-            gains0={gains0} setGains0={setGains0}
-            gains1={gains1} setGains1={setGains1}
-            gains2={gains2} setGains2={setGains2}
-            gains3={gains3} setGains3={setGains3}
-            gains4={gains4} setGains4={setGains4}
-            gains5={gains5} setGains5={setGains5}
-            gains6={gains6} setGains6={setGains6}
-            gains7={gains7} setGains7={setGains7}
-            gains8={gains8} setGains8={setGains8}
-            gains9={gains9} setGains9={setGains9}
             time={time} setTime={setTime} />
             <ResourceSection
-            logs={logs}
-            ores={ores}
-            wheats={wheats}
-            waters={waters}
-            fires={fires}
-            ices={ices}
-            volcanos={volcanos}
-            runes={runes}
-            crystals={crystals}
-            essences={essences}
+            resources={resources} setResources={setResources}
             areas={areas}
-            gains0={gains0} setGains0={setGains0}
-            gains1={gains1} setGains1={setGains1}
-            gains2={gains2} setGains2={setGains2}
-            gains3={gains3} setGains3={setGains3}
-            gains4={gains4} setGains4={setGains4}
-            gains5={gains5} setGains5={setGains5}
-            gains6={gains6} setGains6={setGains6}
-            gains7={gains7} setGains7={setGains7}
-            gains8={gains8} setGains8={setGains8}
-            gains9={gains9} setGains9={setGains9}
             time={time} />
           </Grid>
         </Grid>

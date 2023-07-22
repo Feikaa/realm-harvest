@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './TabSection.css';
-import { Box, Card, Tabs, CardContent, Tab, Typography, createTheme, ThemeProvider } from '@mui/material';
+import { Box, Card, Tabs, CardContent, Tab, Typography, createTheme, ThemeProvider, Button, Stack } from '@mui/material';
 import RealmsSection from './RealmsSection';
 import Upgrade1Section from './Upgrade1Section';
 import AllocationSection from './AllocationSection';
@@ -23,6 +23,14 @@ export default function PopulationSection(props: any) {
   var setAllocated = props.setAllocated;
   var aPop = props.aPop;
   var setAPop = props.setAPop;
+
+  const resources = props.resources;
+  const setResources = props.setResources;
+
+  const items = props.items;
+  const setItems = props.setItems;
+
+  const authenticated = props.authenticated;
 
   const [value, setValue] = React.useState(0);
 
@@ -47,15 +55,23 @@ export default function PopulationSection(props: any) {
   const card = (
     <React.Fragment>
       <CardContent>
-        <Tabs value={value} centered onChange={handleChange} textColor='primary' indicatorColor='primary' >
-            <Tab label="Realms" {...a11yProps(0)}/>
-            <Tab label="Upgrades" {...a11yProps(1)}/>
-            <Tab label="Allocate Population" {...a11yProps(2)}/>
-        </Tabs>
+        <Box>
+          <Tabs value={value} centered onChange={handleChange} textColor='primary' indicatorColor='primary' >
+              <Tab label="Realms" {...a11yProps(0)}/>
+              <Tab label="Upgrades" {...a11yProps(1)}/>
+              <Tab label="Allocate" {...a11yProps(2)}/>
+              <Button sx={{ position: 'absolute', marginLeft: '80%', marginTop: '1%', visibility: value === 2 ? 'visible' : "hidden" }} variant='contained' disabled={aPop === population ? true : false} onClick={() => {
+                setAllocated([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                setAPop(population);
+              }}>
+                Return
+              </Button>
+          </Tabs>
+        </Box>
         <Typography variant="h4">
           {value === 0 ? <RealmsSection areas={areas} area={area} setArea={setArea} /> : 
-           value === 1 ? (area === 1 ? <Upgrade1Section population={population} setPopulation={setPopulation} aPop={aPop} setAPop={setAPop} /> : "") : 
-           <AllocationSection areas={areas} area={area} allocated={allocated} setAllocated={setAllocated} population={population} aPop={aPop} setAPop={setAPop} />}
+           value === 1 ? (area === 1 ? <Upgrade1Section resources={resources} setResources={setResources} population={population} setPopulation={setPopulation} aPop={aPop} setAPop={setAPop} items={items} setItems={setItems} /> : "") : 
+           <AllocationSection areas={areas} area={area} allocated={allocated} setAllocated={setAllocated} population={population} aPop={aPop} setAPop={setAPop} authenticated={authenticated} />}
         </Typography>
       </CardContent>
     </React.Fragment>

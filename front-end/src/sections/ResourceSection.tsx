@@ -2,69 +2,80 @@ import React, {useEffect, useState} from 'react';
 import './ResourceSection.css';
 import { Box, Card, Tabs, CardContent, Tab, Typography, Stack } from '@mui/material';
 import Log from '../images/log.png';
-import Ore from '../images/ore.png';
-import Wheat from '../images/wheat.png';
-import Water from '../images/water_gem.png';
-import Fire from '../images/fire_gem.png';
+import Fur from '../images/fur.png';
+import Berry from '../images/berry.png';
 import Ice from '../images/ice_gem.png';
-import Volcano from '../images/volcano_ore.png';
+import ThickFur from '../images/thick_fur.png';
+import Snow from '../images/ice.png';
+import Ore from '../images/ore.png';
+import Feather from '../images/feather.png';
+import Wheat from '../images/wheat.png';
+import Meat from '../images/meat.png';
+import Herb from '../images/herb.png';
+import Fire from '../images/fire_gem.png';
+import Chitin from '../images/chitin.png';
 import Inscription from '../images/inscription.png';
-import Sky from '../images/sky_gem.png';
+import Rune from '../images/rune.png';
+import Water from '../images/water_gem.png';
+import Fish from '../images/fish.png';
+import Salt from '../images/salt.png';
+import Volcano from '../images/volcano_ore.png';
+import Ash from '../images/ash.png';
 import Essence from '../images/magic_essence.png';
+import FairyDust from '../images/fairy.png';
+import Sky from '../images/sky_gem.png';
 
-interface TextDisplayProps {
+interface Resource {
+  resource: string;
   gain: number;
-  setGain: React.Dispatch<React.SetStateAction<number>>;
+  quantity: number;
 }
 
-const TextDisplay: React.FC<TextDisplayProps> = ({ gain, setGain }) => {
+interface Area {
+  area: string;
+  resources: Resource[];
+}
+
+interface TextDisplayProps {
+  areaIndex: number;
+  resourceIndex: number;
+  resources: Area[];
+  setGain: React.Dispatch<React.SetStateAction<Area[]>>;
+}
+
+const TextDisplay: React.FC<TextDisplayProps> = ({ areaIndex, resourceIndex, resources, setGain }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
 
-    if (gain) {
+    if (resources[areaIndex].resources[resourceIndex].gain != 0) {
       setIsVisible(true);
       timeoutId = setTimeout(() => {
         setIsVisible(false);
-        setGain(0);
+        setGain((prev: any) => {
+          const newResources = [...prev];
+          const resource = newResources[areaIndex].resources[resourceIndex];
+    
+          resource.gain = 0;
+    
+          return newResources;
+        });
       }, 1000);
     }
 
     return () => clearTimeout(timeoutId);
-  }, [gain]);
+  }, [resources[areaIndex].resources[resourceIndex].gain]);
 
-  return <p style={{ fontSize: "25px", color: "green", visibility: isVisible ? "visible" : "hidden"}}>+{gain}</p>;
+  return <div style={{ fontSize: "2.125rem", color: resources[areaIndex].resources[resourceIndex].gain > 0 ? "green" : "red", visibility: isVisible ? "visible" : "hidden"}}>{resources[areaIndex].resources[resourceIndex].gain > 0 ? "+" : ""}{resources[areaIndex].resources[resourceIndex].gain}</div>;
 };
 
 export default function PopulationSection(props: any) {
 
   var population = props.population;
-  var gains0 = props.gains0;
-  var setGains0 = props.setGains0;
-  var gains1 = props.gains1;
-  var setGains1 = props.setGains1;
-  var gains2 = props.gains2;
-  var setGains2 = props.setGains2;
-  var gains3 = props.gains3;
-  var setGains3 = props.setGains3;
-  var gains4 = props.gains4;
-  var setGains4 = props.setGains4;
-  var gains5 = props.gains5;
-  var setGains5 = props.setGains5;
-  var gains6 = props.gains6;
-  var setGains6 = props.setGains6;
-  var gains7 = props.gains7;
-  var setGains7 = props.setGains7;
-  var gains8 = props.gains8;
-  var setGains8 = props.setGains8;
-  var gains9 = props.gains9;
-  var setGains9 = props.setGains9;
-  let [shouldTransition, setShouldTransition] = useState(true);
-  var gains = [gains0, gains1, gains2, gains3, gains4, gains5, gains6, gains7, gains8, gains9];
-  var setGains = [setGains0, setGains1, setGains2, setGains3, setGains4, setGains5, setGains6, setGains7, setGains8, setGains9];
-  var resources = [props.logs, props.ores, props.wheats, props.waters, props.fires, props.ices, props.volcanos, props.runes, props.crystals, props.essences];
-  var pics = [Log, Ore, Wheat, Water, Fire, Ice, Volcano, Inscription, Sky, Essence];
+  const resources = props.resources;
+  const setResources = props.setResources;
+  var pics = [[Log, Berry, Fur], [Ice, ThickFur], [Ore, Snow, Feather], [Wheat, Herb, Meat], [Fire, Chitin], [Inscription, Rune], [Water, Salt, Fish], [Volcano, Ash], [Essence, FairyDust], [Sky]];
 
   var areas = props.areas;
 
@@ -85,14 +96,17 @@ export default function PopulationSection(props: any) {
         <Typography variant="h4">
           <br />
           <Box display="flex" justifyContent="center" alignItems="center">
-          <Stack direction="row" spacing={2}>
-            {gains.map((gain: any, index: any) => {
-              return (
-                <Box sx={{ marginTop: "-60px !important", display: areas.length > index ? "" : "none" }}>
-                <TextDisplay gain={gain} setGain={setGains[index]} />
-                <img src={pics[index]} width="64px" height="64px" />x{resources[index] || 0}&nbsp;&nbsp;
-                </Box>
-)
+          <Stack direction="row" spacing={2} useFlexGap flexWrap="wrap" sx={{ gap: "40px" }}>
+            {resources.map((area: any, index: any) => {
+              return area.resources.map((resource: any, r_index: any) => {
+                // console.log(index + " " + r_index);
+                return (  
+                  <Box sx={{ display: areas.length > index ? "" : "none" }}>
+                    <TextDisplay areaIndex={index} resourceIndex={r_index} resources={resources} setGain={setResources} />
+                  <img src={pics[index][r_index]} width="64px" height="64px" />&nbsp;&nbsp;&nbsp;&nbsp;x{resource.quantity || 0}&nbsp;&nbsp;
+                  </Box>
+                )
+              })
             })}
           </Stack>
           </Box>

@@ -12,7 +12,9 @@ export default function AllocationSection(props: any) {
     var aPop = props.aPop;
     var setAPop = props.setAPop;
 
-    var areaList = ["Forest", "Mountains", "Plains", "Ocean", "Desert", "Tundra", "Volcano", "Ruins", "Sky Islands", "Enchanted Grove"];
+    const authenticated = props.authenticated;
+
+    var areaList = ["Forest", "Tundra", "Mountains", "Plains", "Desert", "Ruins", "Ocean", "Volcano", "Enchanted Grove", "Sky Islands"];
 
       const listAreas = areaList.map((area, i) => {
         if (areas.includes(area.toLowerCase())) {
@@ -23,6 +25,11 @@ export default function AllocationSection(props: any) {
     return (
         <Box sx={{ padding: "2%" }}>
             {listAreas}
+            {authenticated ? "" :
+              <Typography>
+              Login to continue collecting resources while offline!
+              </Typography>
+            }
         </Box>
     )
 }
