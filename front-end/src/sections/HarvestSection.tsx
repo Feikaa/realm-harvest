@@ -24,30 +24,36 @@ export default function PopulationSection(props: any) {
   const items = props.items;
   const setItems = props.setItems;
 
-  var population = props.population;
-  var setPopulation = props.setPopulation;
+  const population = props.population;
+  const setPopulation = props.setPopulation;
+  const allocated = props.allocated;
+  const setAllocated = props.setAllocated;
   var area = props.area;
-  var axe = props.axe;
-  var progress = 0;
-  var tProgress = 0;
-  const [p, setP] = useState(progress);
-  const [t, setT] = useState(tProgress);
-  const [harvest, setHarvest] = useState(0);
-  const [trap, setTrap] = useState(false);
-  var aPop = props.aPop;
+  var upgrades = props.upgrades;
+  const p = props.p;
+  const t = props.t;
+  const setT = props.setT;
+  const harvest = props.harvest;
+  const setHarvest = props.setHarvest;
+  const trap = props.trap;
+  const setTrap = props.setTrap;
+  const aPop = props.aPop;
+  const setAPop = props.setAPop;
 
   var areas = [Forest, Tundra, Mountain, Plains, Desert, Ruins, Ocean, Volcano, EnchantedGrove, SkyIsland];
-
-  var allocated = props.allocated;
-
-  var interval = useRef<any>();
-  var tInterval = useRef<any>();
+  const harvestAreas = [1, 2, 3, 4, 5, 7, 9];
+  const secondaryAreas = [1, 3, 4, 6, 7, 8];
 
   // type = what kind of resource
-  const handleHarvest = (area: number, type: number, increase: number, mode: string) => {
-    if (harvest >= 4 || mode === "auto") {
-      if (mode != "auto") {
-        setHarvest(1);
+  const handleHarvest = (area: number, type: number, increase: number, boost: number, mode: string) => {
+    // If manually clicking, just increase harvest count
+    if (mode !== "auto" && harvest + 1 <= 3) {
+      setHarvest((harvest: any) => harvest + 1 + boost);
+    }
+    // When next click is full, or on auto, get resources
+    else if (harvest + 1 > 3 || harvest > 3 || mode === "auto") {
+      if (mode !== "auto") {
+        setHarvest(0);
       }
       setResources((prev: any) => {
         const newResources = [...prev];
@@ -60,7 +66,8 @@ export default function PopulationSection(props: any) {
   
         return newResources;
       });
-      if (type === 0 && Math.floor(Math.random() * 10) <= 2) {
+      // If area has secondary resources, roll for them
+      if (secondaryAreas.includes(area+1) && Math.floor(Math.random() * 10) <= 2) {
         setResources((prev: any) => {
           const newResources = [...prev];
           const resource = newResources[area].resources[1];
@@ -73,8 +80,6 @@ export default function PopulationSection(props: any) {
           return newResources;
         });
       }
-    } else {
-      setHarvest((harvest) => harvest + 1);
     }
   } 
 
@@ -105,58 +110,41 @@ export default function PopulationSection(props: any) {
   }));
 
   useEffect(() => {
-    if (interval.current && aPop === population) {
-      clearInterval(interval.current);
-      interval.current = null;
-      progress = 0;
-      setP(0);
-    }
-    else if (!interval.current && aPop < population) {
-      interval.current = setInterval(() => {
-        if (progress < 100) {
-          progress += 20;
-        } else {
-          progress = 0;
-        }
-        setP(progress);
-      }, 500);
-    }
-  }, [aPop])
-
-  useEffect(() => {
-    if (p == 100) {
+    if (p === 100) {
       for (let i = 0; i < allocated.length; i++) {
         if (allocated[i] > 0) {
           for (let j = 0; j < resources[i].resources.length; j++) {
-            handleHarvest(i, j, Math.floor((allocated[i] / population) * (1/(j+1)) *  allocated[i]), "auto");
+            handleHarvest(i, j, Math.floor((allocated[i] / population) * (1/(j+1)) *  allocated[i]/(j+1)), 0, "auto");
+          }
+          console.log("area: " + i + " " + "pop:" + population)
+          if (i === 4 || i === 7) { // Desert and Volcano has a 40% chance of reducing population by 10% (rounded up) on auto
+            if (population > 10 && Math.floor(Math.random() * 10) <= 10) {
+              console.log(allocated);
+              var reduce = population - Math.ceil(allocated[i] * 0.1) < 10 ? population - 10 : Math.ceil(allocated[i] * 0.1) <= allocated[i] ? Math.ceil(allocated[i] * 0.1) : allocated[i];
+              if (allocated[4] + allocated[7] === 11) {
+
+              }
+              setAllocated((list: any) => {
+                return [...list.slice(0, i), list[i] - reduce, ...list.slice(i + 1)]
+              })
+              setPopulation((pop: any) => pop - reduce);
+              
+            }
           }
         }
       }
     }
   }, [p])
 
+  // If population is at most 11, you cannot allocate to dangerous areas since that would make the total population go below 10
   useEffect(() => {
-    if (trap) {
-      tInterval.current = setInterval(() => {
-        if (tProgress < 100) {
-          tProgress += 20;
-          setT(tProgress);
-        } else {
-          clearInterval(tInterval.current);
-          tInterval.current = null;
-        }
-      }, 1000)
+    if ((allocated[4] + allocated[7] > 0) && population <= 11) {
+      setAPop((apop: any) => apop + allocated[4] + allocated[7]);
+      setAllocated((list: any) => {
+        return [...list.slice(0,4), 0, ...list.slice(5,7), 0, list.slice(8)]
+      });
     }
-  }, [trap])
-
-  // useEffect(() => {
-  //   if (aPop === population) {
-  //     clearInterval(interval)
-  //     interval = null;
-  //   } else {
-  //     setProgress(100);
-  //   }
-  // }, [aPop])
+  }, [population])
 
   const card = (
     <React.Fragment>
@@ -180,21 +168,29 @@ export default function PopulationSection(props: any) {
               <Box sx={{ paddingBottom: '1%' }}>
                 <BorderLinearProgress value={(harvest/4) * 100} variant='determinate' />
               </Box>
-              <Button variant="contained" color="success" disableRipple onClick={() => {handleHarvest(area - 1, 0, 1, "")}}>
-                {area === 3 ? <IconSickle /> : area === 2 ? <IconPickaxe /> : axe ? <IconAxe /> : <IconHandBackFist />}&nbsp;&nbsp;Harvest
-              </Button>
+              {
+                upgrades[0].upgrades[1].purchased ?
+                <Button variant="contained" color="success" disableRipple onClick={() => {handleHarvest(area - 1, 0, 1, 1, "")}}>
+                  {area === 3 ? <IconSickle /> : area === 2 ? <IconPickaxe /> : area === 1 ? <IconAxe /> : <IconHandBackFist />}&nbsp;&nbsp;Harvest
+                </Button>
+              :
+                <Button variant="contained" color="success" disableRipple onClick={() => {handleHarvest(area - 1, 0, 1, 0, "")}}>
+                  {<IconHandBackFist />}&nbsp;&nbsp;Harvest
+                </Button>
+              }
             </Box>
+            {harvestAreas.includes(area) ?
             <Box>
               <BorderLinearProgress value={t} variant='determinate' />
               <Button variant="contained" color="success" disableRipple disabled={items[0].quantity > 0 && trap === false ? false : t === 100 ? false : true} onClick={t < 100 ? () => {handleTrap(0)} : () => {
-                handleHarvest(0, 2, 2 + Math.floor(Math.random() * 4), "auto");
-                tProgress = 0;
-                setT(tProgress);
+                handleHarvest(0, 2, 2 + Math.floor(Math.random() * 4), 0, "auto");
                 setTrap(false);
+                setT(0);
               }}>
                 {t < 100 ? <React.Fragment>Set Trap(1x <img src={IconTrap} height="48px" width="48px" />)</React.Fragment> : <React.Fragment><IconHandBackFist />&nbsp;&nbsp;Collect</React.Fragment>}
               </Button>
             </Box>
+            : ""}
           </Stack>
         </Typography>
       </CardContent>

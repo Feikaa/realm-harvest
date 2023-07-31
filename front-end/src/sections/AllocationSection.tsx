@@ -11,6 +11,7 @@ export default function AllocationSection(props: any) {
     var population = props.population;
     var aPop = props.aPop;
     var setAPop = props.setAPop;
+    const items = props.items;
 
     const authenticated = props.authenticated;
 
@@ -18,7 +19,7 @@ export default function AllocationSection(props: any) {
 
       const listAreas = areaList.map((area, i) => {
         if (areas.includes(area.toLowerCase())) {
-            return <React.Fragment><AllocationCard num={i+1} area={area} allocated={allocated} setAllocated={setAllocated} population={population} aPop={aPop} setAPop={setAPop} /></React.Fragment>
+            return <React.Fragment><AllocationCard num={i+1} area={area} allocated={allocated} setAllocated={setAllocated} population={population} aPop={aPop} setAPop={setAPop} items={items} /></React.Fragment>
         }
       })
     

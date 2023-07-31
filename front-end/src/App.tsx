@@ -8,8 +8,12 @@ import FooterSection from './sections/FooterSection';
 import { Box, Grid } from '@mui/material';
 import setBodyColor from './setBodyColor'
 import React, { useEffect, useState } from 'react';
+import useInterval from 'react-useinterval';
 
 export default function App() {
+
+  const [p, setP] = useState(0);
+  const [t, setT] = useState(0);
 
   const [backendData, setBackendData] = useState({ "users": [{
     username: "",
@@ -17,23 +21,11 @@ export default function App() {
   }]
   });
 
-  // [] makes useEffect run ONCE upon rendering
-  useEffect(() => {
-    fetch("/api/users").then(
-      response => response.json()
-    ).then(
-      data => {
-        setBackendData(data);
-      }
-    )
+  // Base population is 10. Population cannot drop below 10
+  const [population, setPopulation] = useState(13);
+  const [aPop, setAPop] = useState(population);
 
-    setInterval(() => {
-
-    })
-  }, [])
-
-  var [population, setPopulation] = useState(100);
-  var [aPop, setAPop] = useState(population);
+  const [trap, setTrap] = useState(false);
   // // Wood, Fur, Berries
   // var [forestR, setforestR] = useState([0,0,0]);
   // // Frost Crystal, Thick Fur
@@ -54,6 +46,21 @@ export default function App() {
   // var [groveR, setGroveR] = useState([0,0]);
   // // 
   // var [skyR, setSkyR] = useState(0);
+
+  // [] makes useEffect run ONCE upon rendering
+  useEffect(() => {
+    fetch("/api/users").then(
+      response => response.json()
+    ).then(
+      data => {
+        setBackendData(data);
+      }
+    )
+
+    if (localStorage.getItem("warning") === null) {
+      localStorage.setItem("warning", JSON.stringify(false));
+    }
+}, [])
 
   const resourcesArray = [
     {
@@ -137,9 +144,37 @@ export default function App() {
     {
       item: "trap", quantity: 0,
     },
+    {
+      item: "jam", quantity: 0,
+    },
+    {
+      item: "stew", quantity: 0,
+    },
+    {
+      item: "warm", quantity: 0,
+    }
   ]
 
   const [items, setItems] = useState(itemArray);
+
+  const upgradesArray = [
+    {
+      area: "forest",
+      upgrades: [
+        { upgrade: "houses", purchased: false },
+        { upgrade: "axe", purchased: false },
+        { upgrade: 'warm', purchased: false },
+      ],
+    },
+    {
+      area: "tundra",
+      upgrades: [
+        { upgrade: "rope", purchased: false },
+      ],
+    },
+  ]
+  
+  const [upgrades, setUpgrades] = useState(upgradesArray);
 
   //console.log(resources[1].resources)
 
@@ -148,9 +183,76 @@ export default function App() {
 
   const [authenticated, setAuthenticated] = useState(false);
   const [area, setArea] = useState(1);
-  const [axe, setAxe] = useState(false);
   const [allocated, setAllocated] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const [time, setTime] = useState([0,0,0,0,0,0,0,0,0,0]);
+
+  const [foodCounter, setFoodCounter] = useState(0);
+
+  // Ticks
+  useInterval(() => {
+    // Auto harvest ticks
+    if (aPop < population) {
+      if (p < 100) {
+        setP((p: any) => p + 20);
+      } else {
+        setP(0);
+      }
+    } else {
+      setP(0);
+    }
+
+    // Trap ticks
+    if (trap && t < 100) {
+      setT((t: any) => t + 20);
+    }
+
+    // Eat food ticks
+    // Once every 10 seconds
+    if (upgrades[0].upgrades[0].purchased) {
+      // TODO: rework to use up crafted items instead
+      if (foodCounter >= 10) {
+        // Berries have 1/100 chance to increase (by how much? TODO)
+        if (items[1].quantity > 0) {
+          setItems((prev: any) => {
+            const newItems = [...prev];
+            const item = newItems[1];
+      
+            const newQuantity = item.quantity - 1;
+      
+            item.quantity = newQuantity;
+      
+            return newItems;
+          })
+          if (Math.floor(Math.random() * 100) === 1) {
+            var inc = population
+            setPopulation((population: any) => population + inc);
+            setAPop((apop: any) => apop + inc)
+          }
+        }
+        // Stew has 1/10 chance to increase
+        if (items[2].quantity > 0) {
+          setItems((prev: any) => {
+            const newItems = [...prev];
+            const item = newItems[2];
+      
+            const newQuantity = item.quantity - 1;
+      
+            item.quantity = newQuantity;
+      
+            return newItems;
+          })
+          if (Math.floor(Math.random() * 100) < 10) {
+            var inc = population
+            setPopulation((population: any) => population + inc);
+            setAPop((apop: any) => apop + inc)
+          }
+        }
+        setFoodCounter(0);
+      } else {
+        setFoodCounter((counter: any) => counter + 1);
+      }
+    }
+  }, 1000)
 
   return (
     <div className='App'>
@@ -166,15 +268,15 @@ export default function App() {
         <Grid container spacing={2} alignItems="stretch" direction="row" maxHeight="100vh">
           <Grid item xs={4}>
             <PopulationSection population={population} aPop={aPop} />
-            <TabSection resources={resources} setResources={setResources} authenticated={authenticated} areas={areas} area={area} setArea={setArea}
+            <TabSection resources={resources} setResources={setResources} authenticated={authenticated} areas={areas} setAreas={setAreas} area={area} setArea={setArea}
             allocated={allocated} population={population} setPopulation={setPopulation} setAllocated={setAllocated} aPop={aPop} setAPop={setAPop}
-            items={items} setItems={setItems} />
+            items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} />
           </Grid>
           <Grid item xs={8}>
-            <HarvestSection population={population} setPopulation={setPopulation} area={area}
+            <HarvestSection population={population} setPopulation={setPopulation} area={area} p={p} t={t} setT={setT} trap={trap} setTrap={setTrap}
             resources={resources} setResources={setResources}
             items={items} setItems={setItems}
-            axe={axe} aPop={aPop} allocated={allocated}
+            upgrades={upgrades} aPop={aPop} setAPop={setAPop} allocated={allocated} setAllocated={setAllocated}
             time={time} setTime={setTime} />
             <ResourceSection
             resources={resources} setResources={setResources}

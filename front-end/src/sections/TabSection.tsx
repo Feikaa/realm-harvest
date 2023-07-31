@@ -3,7 +3,9 @@ import './TabSection.css';
 import { Box, Card, Tabs, CardContent, Tab, Typography, createTheme, ThemeProvider, Button, Stack } from '@mui/material';
 import RealmsSection from './RealmsSection';
 import Upgrade1Section from './Upgrade1Section';
+import Upgrade2Section from './Upgrade2Section';
 import AllocationSection from './AllocationSection';
+import CraftSection from './CraftSection';
 
 function a11yProps(index: number) {
   return {
@@ -16,7 +18,8 @@ export default function PopulationSection(props: any) {
 
   var population = props.population;
   var setPopulation = props.setPopulation;
-  var areas = props.areas;
+  const areas = props.areas;
+  const setAreas = props.setAreas;
   var area = props.area;
   var setArea = props.setArea;
   var allocated = props.allocated;
@@ -29,6 +32,9 @@ export default function PopulationSection(props: any) {
 
   const items = props.items;
   const setItems = props.setItems;
+
+  const upgrades = props.upgrades;
+  const setUpgrades = props.setUpgrades;
 
   const authenticated = props.authenticated;
 
@@ -58,9 +64,10 @@ export default function PopulationSection(props: any) {
         <Box>
           <Tabs value={value} centered onChange={handleChange} textColor='primary' indicatorColor='primary' >
               <Tab label="Realms" {...a11yProps(0)}/>
-              <Tab label="Upgrades" {...a11yProps(1)}/>
-              <Tab label="Allocate" {...a11yProps(2)}/>
-              <Button sx={{ position: 'absolute', marginLeft: '80%', marginTop: '1%', visibility: value === 2 ? 'visible' : "hidden" }} variant='contained' disabled={aPop === population ? true : false} onClick={() => {
+              <Tab label="Craft" {...a11yProps(1)}/>
+              <Tab label="Upgrades" {...a11yProps(2)}/>
+              <Tab label="Allocate" {...a11yProps(3)}/>
+              <Button sx={{ position: 'absolute', marginLeft: '80%', marginTop: '1%', visibility: aPop === population ? 'hidden' : "visible" }} variant='contained' disabled={aPop === population ? true : false} onClick={() => {
                 setAllocated([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
                 setAPop(population);
               }}>
@@ -70,8 +77,11 @@ export default function PopulationSection(props: any) {
         </Box>
         <Typography variant="h4">
           {value === 0 ? <RealmsSection areas={areas} area={area} setArea={setArea} /> : 
-           value === 1 ? (area === 1 ? <Upgrade1Section resources={resources} setResources={setResources} population={population} setPopulation={setPopulation} aPop={aPop} setAPop={setAPop} items={items} setItems={setItems} /> : "") : 
-           <AllocationSection areas={areas} area={area} allocated={allocated} setAllocated={setAllocated} population={population} aPop={aPop} setAPop={setAPop} authenticated={authenticated} />}
+           value === 1 ? <CraftSection resources={resources} setResources={setResources} items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} /> :
+           value === 2 ? (area === 1 ? <Upgrade1Section resources={resources} setResources={setResources} population={population} setPopulation={setPopulation} aPop={aPop} setAPop={setAPop} areas={areas} setAreas={setAreas} items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} />
+           : area === 2 ? <Upgrade2Section resources={resources} setResources={setResources} population={population} setPopulation={setPopulation} aPop={aPop} setAPop={setAPop} areas={areas} setAreas={setAreas} items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} />
+           : "") :
+           <AllocationSection areas={areas} area={area} allocated={allocated} setAllocated={setAllocated} population={population} aPop={aPop} setAPop={setAPop} items={items} authenticated={authenticated} />}
         </Typography>
       </CardContent>
     </React.Fragment>
