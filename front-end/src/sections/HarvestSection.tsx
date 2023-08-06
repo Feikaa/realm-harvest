@@ -33,8 +33,7 @@ export default function PopulationSection(props: any) {
   const p = props.p;
   const t = props.t;
   const setT = props.setT;
-  const harvest = props.harvest;
-  const setHarvest = props.setHarvest;
+  const [harvest, setHarvest] = useState(0);
   const trap = props.trap;
   const setTrap = props.setTrap;
   const aPop = props.aPop;
@@ -116,10 +115,10 @@ export default function PopulationSection(props: any) {
           for (let j = 0; j < resources[i].resources.length; j++) {
             handleHarvest(i, j, Math.floor((allocated[i] / population) * (1/(j+1)) *  allocated[i]/(j+1)), 0, "auto");
           }
-          console.log("area: " + i + " " + "pop:" + population)
+          // console.log("area: " + i + " " + "pop:" + population)
           if (i === 4 || i === 7) { // Desert and Volcano has a 40% chance of reducing population by 10% (rounded up) on auto
             if (population > 10 && Math.floor(Math.random() * 10) <= 10) {
-              console.log(allocated);
+              // console.log(allocated);
               var reduce = population - Math.ceil(allocated[i] * 0.1) < 10 ? population - 10 : Math.ceil(allocated[i] * 0.1) <= allocated[i] ? Math.ceil(allocated[i] * 0.1) : allocated[i];
               if (allocated[4] + allocated[7] === 11) {
 

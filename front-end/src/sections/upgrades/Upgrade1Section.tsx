@@ -1,13 +1,13 @@
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
-import Log from '../images/log.png';
-import Fur from '../images/fur.png';
-import Ore from '../images/ore.png';
-import Wheat from '../images/wheat.png';
+import Log from '../../images/log.png';
+import Fur from '../../images/fur.png';
+import Ore from '../../images/ore.png';
+import Wheat from '../../images/wheat.png';
 import { Box, Button, Grid, List } from '@mui/material';
-import Homes from '../images/home.png';
-import Axe from '../images/axe.png';
-import Warm from '../images/warm.png';
+import Homes from '../../images/home.png';
+import Axe from '../../images/axe.png';
+import Warm from '../../images/warm.png';
 
 export default function Upgrade1Section(props: any) {
 

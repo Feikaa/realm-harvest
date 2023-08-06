@@ -2,8 +2,16 @@ import * as React from 'react';
 import './TabSection.css';
 import { Box, Card, Tabs, CardContent, Tab, Typography, createTheme, ThemeProvider, Button, Stack } from '@mui/material';
 import RealmsSection from './RealmsSection';
-import Upgrade1Section from './Upgrade1Section';
-import Upgrade2Section from './Upgrade2Section';
+import Upgrade1Section from './upgrades/Upgrade1Section';
+import Upgrade2Section from './upgrades/Upgrade2Section';
+import Upgrade3Section from './upgrades/Upgrade3Section';
+import Upgrade4Section from './upgrades/Upgrade4Section';
+import Upgrade5Section from './upgrades/Upgrade5Section';
+import Upgrade6Section from './upgrades/Upgrade6Section';
+import Upgrade7Section from './upgrades/Upgrade7Section';
+import Upgrade8Section from './upgrades/Upgrade8Section';
+import Upgrade9Section from './upgrades/Upgrade9Section';
+import Upgrade10Section from './upgrades/Upgrade9Section';
 import AllocationSection from './AllocationSection';
 import CraftSection from './CraftSection';
 
@@ -80,6 +88,14 @@ export default function PopulationSection(props: any) {
            value === 1 ? <CraftSection resources={resources} setResources={setResources} items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} /> :
            value === 2 ? (area === 1 ? <Upgrade1Section resources={resources} setResources={setResources} population={population} setPopulation={setPopulation} aPop={aPop} setAPop={setAPop} areas={areas} setAreas={setAreas} items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} />
            : area === 2 ? <Upgrade2Section resources={resources} setResources={setResources} population={population} setPopulation={setPopulation} aPop={aPop} setAPop={setAPop} areas={areas} setAreas={setAreas} items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} />
+           : area === 3 ? <Upgrade3Section resources={resources} setResources={setResources} population={population} setPopulation={setPopulation} aPop={aPop} setAPop={setAPop} areas={areas} setAreas={setAreas} items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} />
+           : area === 4 ? <Upgrade4Section resources={resources} setResources={setResources} population={population} setPopulation={setPopulation} aPop={aPop} setAPop={setAPop} areas={areas} setAreas={setAreas} items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} />
+           : area === 5 ? <Upgrade5Section resources={resources} setResources={setResources} population={population} setPopulation={setPopulation} aPop={aPop} setAPop={setAPop} areas={areas} setAreas={setAreas} items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} />
+           : area === 6 ? <Upgrade6Section resources={resources} setResources={setResources} population={population} setPopulation={setPopulation} aPop={aPop} setAPop={setAPop} areas={areas} setAreas={setAreas} items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} />
+           : area === 7 ? <Upgrade7Section resources={resources} setResources={setResources} population={population} setPopulation={setPopulation} aPop={aPop} setAPop={setAPop} areas={areas} setAreas={setAreas} items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} />
+           : area === 8 ? <Upgrade8Section resources={resources} setResources={setResources} population={population} setPopulation={setPopulation} aPop={aPop} setAPop={setAPop} areas={areas} setAreas={setAreas} items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} />
+           : area === 9 ? <Upgrade9Section resources={resources} setResources={setResources} population={population} setPopulation={setPopulation} aPop={aPop} setAPop={setAPop} areas={areas} setAreas={setAreas} items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} />
+           : area === 10 ? <Upgrade10Section resources={resources} setResources={setResources} population={population} setPopulation={setPopulation} aPop={aPop} setAPop={setAPop} areas={areas} setAreas={setAreas} items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} />
            : "") :
            <AllocationSection areas={areas} area={area} allocated={allocated} setAllocated={setAllocated} population={population} aPop={aPop} setAPop={setAPop} items={items} authenticated={authenticated} />}
         </Typography>

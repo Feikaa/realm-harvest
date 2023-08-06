@@ -1,13 +1,13 @@
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
-import Log from '../images/log.png';
-import Fur from '../images/fur.png';
-import Ore from '../images/ore.png';
-import Wheat from '../images/wheat.png';
+import Log from '../../images/log.png';
+import Fur from '../../images/fur.png';
+import Ore from '../../images/ore.png';
+import Wheat from '../../images/wheat.png';
 import { Box, Button, Grid, List } from '@mui/material';
-import Homes from '../images/home.png';
-import Axe from '../images/axe.png';
-import Warm from '../images/warm.png';
+import Homes from '../../images/home.png';
+import Axe from '../../images/axe.png';
+import Warm from '../../images/warm.png';
 
 export default function Upgrade2Section(props: any) {
 
@@ -75,24 +75,7 @@ export default function Upgrade2Section(props: any) {
           </Button>
         </Box>}
 
-        <Box sx={{paddingTop: "1%" }}>
-          <Button onClick={() => {
-            setPopulation(population + 10);
-            setAPop(aPop + 10);
-          }}
-          variant="contained" sx={{ width: "80%" }}
-          color='info'>
-            Increase Population
-            <Grid container spacing={0} direction="row" alignItems="center" justifyContent="right">
-                <React.Fragment>
-                <Box sx={{border: 1, width: "70px"}}>
-                  <img src={Log} alt="Log" height="48" width="48"></img>
-                  200
-                </Box>
-                </React.Fragment>
-            </Grid>
-          </Button>
-        </Box>
+
       </List>
     </Paper>
   );

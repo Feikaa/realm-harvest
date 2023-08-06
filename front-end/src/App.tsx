@@ -15,16 +15,39 @@ export default function App() {
   const [p, setP] = useState(0);
   const [t, setT] = useState(0);
 
-  const [backendData, setBackendData] = useState({ "users": [{
-    username: "",
-    password: ""
-  }]
-  });
+  // [] makes useEffect run ONCE upon rendering
+  useEffect(() => {
+
+    if (localStorage.getItem("warning") === null) {
+      localStorage.setItem("warning", JSON.stringify(false));
+    }
+
+    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("username");
+    if (token && username) {
+      fetch("http://127.0.0.1:5000/api/validtoken/",{
+        method: "GET",
+        headers: {
+            'token': token,
+            'Content-Type': 'application/json'
+        }
+      })
+      .then(response =>
+          response.json().then(data => ({
+              data: data, 
+              status: response.status
+          })
+          ).then(res => {
+              (res.status === 200 && res.data.user === username) ? getData(username!) : setAuthenticated(false);
+          }));
+    }
+}, [])
 
   // Base population is 10. Population cannot drop below 10
-  const [population, setPopulation] = useState(13);
+  const [population, setPopulation] = useState(10);
   const [aPop, setAPop] = useState(population);
 
+  // Is there a trap set up?
   const [trap, setTrap] = useState(false);
   // // Wood, Fur, Berries
   // var [forestR, setforestR] = useState([0,0,0]);
@@ -46,21 +69,6 @@ export default function App() {
   // var [groveR, setGroveR] = useState([0,0]);
   // // 
   // var [skyR, setSkyR] = useState(0);
-
-  // [] makes useEffect run ONCE upon rendering
-  useEffect(() => {
-    fetch("/api/users").then(
-      response => response.json()
-    ).then(
-      data => {
-        setBackendData(data);
-      }
-    )
-
-    if (localStorage.getItem("warning") === null) {
-      localStorage.setItem("warning", JSON.stringify(false));
-    }
-}, [])
 
   const resourcesArray = [
     {
@@ -163,7 +171,7 @@ export default function App() {
       upgrades: [
         { upgrade: "houses", purchased: false },
         { upgrade: "axe", purchased: false },
-        { upgrade: 'warm', purchased: false },
+        { upgrade: 'warm', purchased: false }
       ],
     },
     {
@@ -179,14 +187,52 @@ export default function App() {
   //console.log(resources[1].resources)
 
   // Unlocked areas
-  const [areas, setAreas] = useState(["forest", "tundra", "mountains", "plains", "desert", "ruins", "ocean", "volcano", "enchanted grove", "sky islands"]);
+  const [areas, setAreas] = useState(["forest"]);
 
   const [authenticated, setAuthenticated] = useState(false);
   const [area, setArea] = useState(1);
   const [allocated, setAllocated] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-  const [time, setTime] = useState([0,0,0,0,0,0,0,0,0,0]);
 
   const [foodCounter, setFoodCounter] = useState(0);
+
+  const getData = (username: string) => {
+    setAuthenticated(true);
+    fetch("/api/data/" + username,{
+      method: "GET",
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    }).then(response =>
+      response.json().then(data => ({
+          data: data, 
+          status: response.status
+      })
+      ).then(res => {
+          if (res.status === 200) {
+            setPopulation(res.data.result.population != null ? res.data.result.population : population);
+            setAPop(res.data.result.apop != null ? res.data.result.apop : aPop);
+            setTrap(res.data.result.trap != null ? res.data.result.trap : trap);
+            setResources(res.data.result.resources != null ? res.data.result.resources : resourcesArray);
+            setItems(res.data.result.items != null ? res.data.result.items : itemArray);
+            setUpgrades(res.data.result.upgrades != null ? res.data.result.upgrades : upgradesArray);
+            setAreas(res.data.result.areas != null ? res.data.result.areas : areas);
+            setArea(res.data.result.area != null ? res.data.result.area : area);
+            setAllocated(res.data.result.allocated != null ? res.data.result.allocated : allocated);
+          }
+      }));
+  }
+
+  const clearData = () => {
+    setPopulation(10);
+    setAPop(10);
+    setTrap(false);
+    setResources(resourcesArray);
+    setItems(itemArray);
+    setUpgrades(upgradesArray);
+    setAreas(["forest"]);
+    setArea(1);
+    setAllocated([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  }
 
   // Ticks
   useInterval(() => {
@@ -209,7 +255,6 @@ export default function App() {
     // Eat food ticks
     // Once every 10 seconds
     if (upgrades[0].upgrades[0].purchased) {
-      // TODO: rework to use up crafted items instead
       if (foodCounter >= 10) {
         // Berries have 1/100 chance to increase (by how much? TODO)
         if (items[1].quantity > 0) {
@@ -264,7 +309,9 @@ export default function App() {
         ))
       )} */}
       <Box sx={{ flexGrow: 1 }}>
-        <HeaderSection authenticated={authenticated} setAuthenticated={setAuthenticated} />
+        <HeaderSection authenticated={authenticated} setAuthenticated={setAuthenticated}
+        population={population} aPop={aPop} trap={trap} resources={resources} items={items} upgrades={upgrades} areas={areas} area={area}
+        allocated={allocated} getData={getData} clearData={clearData} />
         <Grid container spacing={2} alignItems="stretch" direction="row" maxHeight="100vh">
           <Grid item xs={4}>
             <PopulationSection population={population} aPop={aPop} />
@@ -277,11 +324,11 @@ export default function App() {
             resources={resources} setResources={setResources}
             items={items} setItems={setItems}
             upgrades={upgrades} aPop={aPop} setAPop={setAPop} allocated={allocated} setAllocated={setAllocated}
-            time={time} setTime={setTime} />
+             />
             <ResourceSection
             resources={resources} setResources={setResources}
             areas={areas}
-            time={time} />
+             />
           </Grid>
         </Grid>
         {/* <FooterSection /> */}
