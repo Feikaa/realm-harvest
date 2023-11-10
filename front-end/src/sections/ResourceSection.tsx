@@ -32,6 +32,10 @@ import Stone from '../images/stone.png';
 import Sky from '../images/sky_gem.png';
 import AstralFeather from '../images/astral_feather.png';
 
+const courierFontStyle = {
+  fontFamily: 'Kurale',
+};
+
 interface Resource {
   resource: string;
   gain: number;
@@ -74,7 +78,7 @@ const TextDisplay: React.FC<TextDisplayProps> = ({ areaIndex, resourceIndex, res
     return () => clearTimeout(timeoutId);
   }, [resources[areaIndex].resources[resourceIndex].gain]);
 
-  return <div style={{ fontSize: "2.125rem", color: resources[areaIndex].resources[resourceIndex].gain > 0 ? "green" : "red", visibility: isVisible ? "visible" : "hidden"}}>{resources[areaIndex].resources[resourceIndex].gain > 0 ? "+" : ""}{resources[areaIndex].resources[resourceIndex].gain}</div>;
+  return <div style={{ fontSize: "2.125rem", color: resources[areaIndex].resources[resourceIndex].gain > 0 ? "green" : "red", visibility: isVisible ? "visible" : "hidden", fontFamily: 'Kurale'}}>{resources[areaIndex].resources[resourceIndex].gain > 0 ? "+" : ""}{resources[areaIndex].resources[resourceIndex].gain}</div>;
 };
 
 export default function PopulationSection(props: any) {
@@ -89,7 +93,7 @@ export default function PopulationSection(props: any) {
   const card = (
     <React.Fragment>
       <CardContent>
-        <Typography variant="h3" component="div">
+        <Typography variant="h3" component="div" style={courierFontStyle}>
           Resources
         </Typography>
         <Typography variant="h4">
@@ -102,7 +106,9 @@ export default function PopulationSection(props: any) {
                 return (  
                   <Box sx={{ display: areas.length > index ? "" : "none" }}>
                     <TextDisplay areaIndex={index} resourceIndex={r_index} resources={resources} setGain={setResources} />
-                  <img src={pics[index][r_index]} width="64px" height="64px" />&nbsp;&nbsp;&nbsp;&nbsp;x{resource.quantity || 0}&nbsp;&nbsp;
+                    <Box display="flex" justifyContent="center" alignItems="center">
+                      <img src={pics[index][r_index]} width="64px" height="64px" />&nbsp;&nbsp;&nbsp;&nbsp;<Typography variant='h4' style={courierFontStyle}>x{resource.quantity || 0}</Typography>&nbsp;&nbsp;
+                    </Box>
                   </Box>
                 )
               })
@@ -116,7 +122,7 @@ export default function PopulationSection(props: any) {
 
     return (
         <Box sx={{ padding: "1%" }}>
-            <Card variant="outlined" className="Resource" sx={{ border: 5, borderColor: '#32cd32', borderRadius: '16px' }}>
+            <Card variant="outlined" className="Resource" sx={{ border: "12px ridge", borderColor: '#763a00' }}>
                 {card}
             </Card>
 

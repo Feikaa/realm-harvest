@@ -1,6 +1,10 @@
 import { Stack, Typography, Button, CardContent, Card, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, FormControlLabel, Checkbox, Switch, Grid } from "@mui/material";
 import React, { useState } from "react";
 
+const courierFontStyle = {
+    fontFamily: 'Kurale, monospace',
+  };
+
 export default function AllocationCard(props: any) {
 
     var area = props.area;
@@ -76,10 +80,10 @@ export default function AllocationCard(props: any) {
         <Card sx={{ backgroundColor: areaColor[num - 1], borderRadius: '16px', marginBottom: '8px' }}>
             <CardContent sx={{ paddingBottom: '16px !important' }}>
             <Stack direction="row" spacing={1} justifyContent='space-between'>
-            <Typography variant="button" component="div" color={BTAreas.includes(num) ? "#000000" : "#ffffff"} display="flex" alignItems="center">
+            <Typography variant="button" component="div" color={BTAreas.includes(num) ? "#000000" : "#ffffff"} display="flex" alignItems="center" style={courierFontStyle}>
             {num}. {area}
             </Typography>
-            <Typography variant="button" component="div" color={BTAreas.includes(num) ? "#000000" : "#ffffff"} display="flex" alignItems="center">
+            <Typography variant="button" component="div" color={BTAreas.includes(num) ? "#000000" : "#ffffff"} display="flex" alignItems="center" style={courierFontStyle}>
                 Allocated: {allocated[num - 1]}
             </Typography>
             <Stack direction="row" justifyContent={"flex-end"} spacing={1}>
@@ -87,20 +91,20 @@ export default function AllocationCard(props: any) {
                 {num === 5 || num === 8 ?
                     <Dialog open={open}
                     onClose={handleClose}>
-                        <DialogTitle>
+                        <DialogTitle style={courierFontStyle}>
                             Dangerous Zone
                         </DialogTitle>
                         <DialogContent>
-                            <DialogContentText>
-                                You are about to allocate your population to a <Typography display="inline" color="#8B0000">dangerous zone</Typography>.
+                            <DialogContentText style={courierFontStyle}>
+                                You are about to allocate your population to a <Typography display="inline" color="#8B0000" style={courierFontStyle}>dangerous zone</Typography>.
                                 This means there is a chance some of them won't make it back alive.
                             </DialogContentText>
                         </DialogContent>
                         <Stack direction="row" spacing={1} justifyContent="space-between">
-                        <FormControlLabel control={<Switch onChange={handleChange} />} label="Don't remind me again" sx={{ paddingLeft: '2%' }}/>
+                        <FormControlLabel control={<Switch onChange={handleChange} />} style={courierFontStyle} label="Don't remind me again" sx={{ paddingLeft: '2%' }}/>
                         <DialogActions>
                             <Button color="error" onClick={() => {handleClose()}}>
-                                <Typography color={"#000000"}>
+                                <Typography color={"#000000"} style={courierFontStyle}>
                                     Back
                                 </Typography>
                             </Button>
@@ -108,7 +112,7 @@ export default function AllocationCard(props: any) {
                                 handleAllocate("all", num - 1);
                                 handleClose();
                                 }}>
-                                <Typography color={"#000000"}>
+                                <Typography color={"#000000"} style={courierFontStyle}>
                                     Continue
                                 </Typography>
                             </Button>
@@ -117,7 +121,7 @@ export default function AllocationCard(props: any) {
                                 handleAllocate(1, num - 1);
                                 handleClose();
                                 }}>
-                                <Typography color={"#000000"}>
+                                <Typography color={"#000000"} style={courierFontStyle}>
                                     Continue
                                 </Typography>
                             </Button>}
@@ -133,11 +137,11 @@ export default function AllocationCard(props: any) {
                         handleAllocate(1, num - 1);
                     }
                 }} disabled={(aPop === 0 || (num === 2 && allocated[num - 1] === items[3].quantity) || ((num === 5 || num === 8) && population <= 11)) ? true : false}>
-                    <Typography color={num === 5 ? "#ffffff" : num === 8 ? "#ffffff" : "#000000"}>
+                    <Typography color={num === 5 ? "#ffffff" : num === 8 ? "#ffffff" : "#000000"} style={courierFontStyle}>
                         +
                     </Typography>
                 </Button>
-                <Button variant='contained' color='secondary' onClick={() => {handleAllocate(-1, num - 1)}} disabled={allocated[num - 1] === 0 ? true : false}>
+                <Button variant='contained' color='secondary' onClick={() => {handleAllocate(-1, num - 1)}} disabled={allocated[num - 1] === 0 ? true : false} style={courierFontStyle}>
                     -
                 </Button>
                 <Button variant='contained' color={num === 5 ? 'error' : num === 8 ? 'error' : 'secondary'} onClick={() => {
@@ -148,7 +152,7 @@ export default function AllocationCard(props: any) {
                         handleAllocate("all", num - 1);
                     }
                 }} disabled={(aPop === 0 || (num === 2 && allocated[num - 1] === items[3].quantity) || ((num === 5 || num === 8) && population <= 11)) ? true : false}>
-                    <Typography color={num === 5 ? "#ffffff" : num === 8 ? "#ffffff" : "#000000"}>
+                    <Typography color={num === 5 ? "#ffffff" : num === 8 ? "#ffffff" : "#000000"} style={courierFontStyle}>
                         All
                     </Typography>
                 </Button>

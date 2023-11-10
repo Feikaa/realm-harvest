@@ -13,6 +13,10 @@ import IconJam from '../images/jam.png';
 import IconWarm from '../images/warm.png';
 import IconStew from '../images/stew.png';
 
+const courierFontStyle = {
+    fontFamily: 'Kurale, monospace',
+  };
+
 export default function CraftSection(props: any) {
 
   const resources = props.resources;
@@ -56,14 +60,14 @@ export default function CraftSection(props: any) {
             <Card sx={{ backgroundColor: "#D3D3D3", borderRadius: '16px', marginBottom: '8px' }}>
             <CardContent sx={{ paddingBottom: '16px !important' }}>
             <Stack direction="row" spacing={1} justifyContent='space-between'>
-                    <Typography variant="button" component="div" color={"#000000"} display="flex" alignItems="center">
+                    <Typography variant="button" component="div" color={"#000000"} display="flex" alignItems="center" style={courierFontStyle}>
                     Animal Trap
                     <img src={IconTrap} alt="Trap Icon" width="64px" height="64px" />x{items[0].quantity}&nbsp;&nbsp;
                     <Box alignItems="center" justifyContent="center">
                         Used to collect animal fur
                     </Box>
                     </Typography>
-                    <Typography variant="button" component="div" color={"#000000"} display="flex" alignItems="center">
+                    <Typography variant="button" component="div" color={"#000000"} display="flex" alignItems="center" style={courierFontStyle}>
                         <Grid container spacing={0} direction="row" alignItems="center" justifyContent="right">
                             <React.Fragment>
                             <Stack direction="row">
@@ -84,13 +88,13 @@ export default function CraftSection(props: any) {
                     </Typography>
                     <Stack direction="row" justifyContent={"flex-end"} spacing={1}>
                     <Typography sx={{ verticalAlign: 'middle', display: 'inline-flex' }}>
-                        <Button variant='contained' color='secondary' onClick={() => {craftItem(0, [[0,0], [0,1]], [20, 1], 1)}} disabled={resources[0].resources[0].quantity >= 20 ? resources[0].resources[1].quantity >= 1 ? false : true : true }>
+                        <Button style={courierFontStyle} variant='contained' color='secondary' onClick={() => {craftItem(0, [[0,0], [0,1]], [20, 1], 1)}} disabled={resources[0].resources[0].quantity >= 20 ? resources[0].resources[1].quantity >= 1 ? false : true : true }>
                             +1
                         </Button>
-                        <Button variant='contained' color='secondary' onClick={() => {craftItem(0, [[0,0], [0,1]], [20, 1], 10)}} disabled={resources[0].resources[0].quantity >= 20 * 10 ? resources[0].resources[1].quantity >= 1 * 10 ? false : true : true}>
+                        <Button style={courierFontStyle} variant='contained' color='secondary' onClick={() => {craftItem(0, [[0,0], [0,1]], [20, 1], 10)}} disabled={resources[0].resources[0].quantity >= 20 * 10 ? resources[0].resources[1].quantity >= 1 * 10 ? false : true : true}>
                             +10
                         </Button>
-                        <Button variant='contained' color='secondary' onClick={() => {craftItem(0, [[0,0], [0,1]], [20, 1], Math.min(Math.floor(resources[0].resources[0].quantity / 20), resources[0].resources[1].quantity))}} disabled={resources[0].resources[0].quantity >= 20 ? resources[0].resources[1].quantity >= 1 ? false : true : true}>
+                        <Button style={courierFontStyle} variant='contained' color='secondary' onClick={() => {craftItem(0, [[0,0], [0,1]], [20, 1], Math.min(Math.floor(resources[0].resources[0].quantity / 20), resources[0].resources[1].quantity))}} disabled={resources[0].resources[0].quantity >= 20 ? resources[0].resources[1].quantity >= 1 ? false : true : true}>
                             Max (+{Math.min(Math.floor(resources[0].resources[0].quantity / 20), resources[0].resources[1].quantity)})
                         </Button>
                     </Typography>

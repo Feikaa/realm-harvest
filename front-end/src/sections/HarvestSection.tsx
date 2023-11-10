@@ -16,6 +16,10 @@ import IconPickaxe from '../icons/IconPickaxe';
 import IconSickle from '../icons/IconSickle';
 import IconTrap from '../images/trap.png';
 
+const courierFontStyle = {
+  fontFamily: 'Kurale',
+};
+
 export default function PopulationSection(props: any) {
 
   const resources = props.resources;
@@ -162,10 +166,10 @@ export default function PopulationSection(props: any) {
   const card = (
     <React.Fragment>
       <CardContent>
-        <Typography variant="h3" component="div">
+        <Typography variant="h3" component="div" style={courierFontStyle}>
           Harvest
         </Typography>
-        <Typography>
+        <Typography style={courierFontStyle}>
           {aPop === population ? "Idle" : "Auto"}
           <BorderLinearProgress variant='determinate' value={p} sx={{ maxWidth: '25%' }} style={{ marginLeft: "37.5%"}} />
           {aPop === population ? "" : p < 40 ? "Travelling..." : p < 80 ? "Collecting..." : "Returning..."}
@@ -183,11 +187,11 @@ export default function PopulationSection(props: any) {
               </Box>
               {
                 upgrades[0].upgrades[1].purchased ?
-                <Button variant="contained" color="success" disableRipple onClick={() => {handleHarvest(area - 1, 0, 1, 1, "")}}>
+                <Button variant="contained" color="success" disableRipple onClick={() => {handleHarvest(area - 1, 0, 1, 1, "")}} style={courierFontStyle}>
                   {area === 3 ? <IconSickle /> : area === 2 ? <IconPickaxe /> : area === 1 ? <IconAxe /> : <IconHandBackFist />}&nbsp;&nbsp;Harvest
                 </Button>
               :
-                <Button variant="contained" color="success" disableRipple onClick={() => {handleHarvest(area - 1, 0, 1, 0, "")}}>
+                <Button variant="contained" color="success" disableRipple onClick={() => {handleHarvest(area - 1, 0, 1, 0, "")}} style={courierFontStyle}>
                   {<IconHandBackFist />}&nbsp;&nbsp;Harvest
                 </Button>
               }
@@ -199,7 +203,7 @@ export default function PopulationSection(props: any) {
                 handleHarvest(0, 2, 2 + Math.floor(Math.random() * 4), 0, "auto");
                 setTrap(false);
                 setT(0);
-              }}>
+              }} style={courierFontStyle}>
                 {t < 100 ? <React.Fragment>Set Trap(1x <img src={IconTrap} height="48px" width="48px" />)</React.Fragment> : <React.Fragment><IconHandBackFist />&nbsp;&nbsp;Collect</React.Fragment>}
               </Button>
             </Box>
@@ -212,7 +216,7 @@ export default function PopulationSection(props: any) {
 
     return (
         <Box sx={{ padding: "1%"}}>
-            <Card variant="outlined" className="Card" sx={{ border: 5, borderColor: '#32cd32', borderRadius: '16px' }}>
+            <Card variant="outlined" className="Card" sx={{ border: "12px ridge", borderColor: '#763a00' }}>
                 {card}
             </Card>
 

@@ -15,6 +15,10 @@ import Upgrade10Section from './upgrades/Upgrade9Section';
 import AllocationSection from './AllocationSection';
 import CraftSection from './CraftSection';
 
+const courierFontStyle = {
+  fontFamily: 'Kurale, monospace',
+};
+
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
@@ -52,38 +56,50 @@ export default function PopulationSection(props: any) {
     setValue(newValue);
   };
   
-    const theme = createTheme({
-        palette: {
-        primary: {
-            // Green.
-            main: '#11cb5f',
-        },
-        secondary: {
-            // White
-            main: '#FFFFFF',
-        },
-
-        },
-    });
+  const { palette } = createTheme();
+  const { augmentColor } = palette;
+  const createColor = (mainColor: any) => augmentColor({ color: { main: mainColor } });
+  const theme = createTheme({
+      palette: {
+      primary: {
+          // Green.
+          main: '#11cb5f',
+      },
+      secondary: {
+          // White
+          main: '#FFFFFF',
+      },
+      forest: createColor('#006400'),
+      tundra: createColor('#32476b'),
+      mountains: createColor('#313232'),
+      plains: createColor('#90ee90'),
+      desert: createColor('#ffffe0'),
+      ruins: createColor('#556b2f'),
+      ocean: createColor('#0000ff'),
+      volcano: createColor('#8b0000'),
+      enchantedgrove: createColor('#800080'),
+      skyislands: createColor('#00bfff'),
+      },
+  });
 
   const card = (
     <React.Fragment>
       <CardContent>
         <Box>
           <Tabs value={value} centered onChange={handleChange} textColor='primary' indicatorColor='primary' >
-              <Tab label="Realms" {...a11yProps(0)}/>
-              <Tab label="Craft" {...a11yProps(1)}/>
-              <Tab label="Upgrades" {...a11yProps(2)}/>
-              <Tab label="Allocate" {...a11yProps(3)}/>
+              <Tab style={courierFontStyle} label="Realms" {...a11yProps(0)}/>
+              <Tab style={courierFontStyle} label="Craft" {...a11yProps(1)}/>
+              <Tab style={courierFontStyle} label="Upgrades" {...a11yProps(2)}/>
+              <Tab style={courierFontStyle} label="Allocate" {...a11yProps(3)}/>
               <Button sx={{ position: 'absolute', marginLeft: '80%', marginTop: '1%', visibility: aPop === population ? 'hidden' : "visible" }} variant='contained' disabled={aPop === population ? true : false} onClick={() => {
                 setAllocated([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
                 setAPop(population);
-              }}>
+              }} style={courierFontStyle}>
                 Return
               </Button>
           </Tabs>
         </Box>
-        <Typography variant="h4">
+        <Typography variant="h4" style={courierFontStyle}>
           {value === 0 ? <RealmsSection areas={areas} area={area} setArea={setArea} /> : 
            value === 1 ? <CraftSection resources={resources} setResources={setResources} items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} /> :
            value === 2 ? (area === 1 ? <Upgrade1Section resources={resources} setResources={setResources} population={population} setPopulation={setPopulation} aPop={aPop} setAPop={setAPop} areas={areas} setAreas={setAreas} items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} />
@@ -106,7 +122,7 @@ export default function PopulationSection(props: any) {
     return (
         <ThemeProvider theme={theme}>
         <Box sx={{ padding: "2%"}}>
-            <Card variant="outlined" className="tab" sx={{ border: 5, borderColor: '#32cd32', borderRadius: '16px' }}>
+            <Card variant="outlined" className="tab" sx={{ border: "12px ridge", borderColor: '#763a00' }}>
                 {card}
             </Card>
 

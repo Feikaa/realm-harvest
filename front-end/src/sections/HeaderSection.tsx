@@ -4,6 +4,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import LoginPopup from "../popups/LoginPopup";
 import SignupPopup from '../popups/SignupPopup';
 
+const courierFontStyle = {
+  fontFamily: 'Kurale, monospace',
+};
+
 export default function HeaderSection(props: any) {
 
   const [openLogin, setOpenLogin] = useState(false);
@@ -145,10 +149,10 @@ const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
             <Typography>
               <Button variant="contained" color="primary" disabled={authenticated ? false : true} onClick={() => {
                 hasJWT();
-              }}>Save</Button>
+              }} style={courierFontStyle}>Save</Button>
             </Typography>
           </BootstrapTooltip>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} style={courierFontStyle}>
             Realm Harvest
           </Typography>
           <Button variant="contained" color={authenticated ? "error" : "success"} onClick={() => {
@@ -160,7 +164,7 @@ const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
             } else {
               setOpenLogin(true);
             }
-            }}>{authenticated ? "Logout" : "Login"}</Button>
+            }} style={courierFontStyle}>{authenticated ? "Logout" : "Login"}</Button>
         </Toolbar>
       </AppBar>
       <LoginPopup openLogin={openLogin} handleCloseLogin={handleCloseLogin} handleSubmitLogin={handleSubmitLogin} handleClickOpenSignup={handleClickOpenSignup} eMessage={eMessage} />
