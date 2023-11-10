@@ -106,9 +106,11 @@ app.post('/api/login', async (req, res) => {
                 SECRET_KEY,
             );
             res.status(200).json({"user": user.username, "token": token})
+        } else {
+            res.status(403).json({ error: "Incorrect password" })
         }
     } catch (e) {
-        res.status(500).json({ error: e.message});
+        res.status(500).json({ error: "error"});
     }
 })
 

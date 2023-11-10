@@ -5,9 +5,6 @@ import Fur from '../../images/fur.png';
 import Ore from '../../images/ore.png';
 import Wheat from '../../images/wheat.png';
 import { Box, Button, Grid, List } from '@mui/material';
-import Homes from '../../images/home.png';
-import Axe from '../../images/axe.png';
-import Warm from '../../images/warm.png';
 
 export default function Upgrade2Section(props: any) {
 
@@ -59,7 +56,7 @@ export default function Upgrade2Section(props: any) {
           color='info'
           disabled={resources[0].resources[0].quantity >= 50 ? false : true}>
             Ropes
-            <img src={Homes} alt="Home" width="64" height='64' />&nbsp;&nbsp;
+            <img src={Log} alt="Home" width="64" height='64' />&nbsp;&nbsp;
             <Box alignItems="center" justifyContent="center">
               Allows your population to grow
             </Box>

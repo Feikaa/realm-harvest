@@ -9,6 +9,7 @@ export default function HeaderSection(props: any) {
   const [openLogin, setOpenLogin] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
   const [alert, setAlert] = useState(false);
+  const [eMessage, setEMessage] = useState("");
   const authenticated = props.authenticated;
   const setAuthenticated = props.setAuthenticated;
   
@@ -28,6 +29,7 @@ export default function HeaderSection(props: any) {
   const handleClickOpenLogin = () => { handleCloseSignup(); setOpenLogin(true); };
   const handleCloseLogin = () => { setOpenLogin(false); };
   const handleSubmitLogin = (username: string, password: string) => {
+    setEMessage("")
     fetch("http://127.0.0.1:5000/api/login",{
         method: "POST",
         headers: {
@@ -44,13 +46,20 @@ export default function HeaderSection(props: any) {
         status: response.status
     })
     ).then(res => {
-        res.status === 200 ? setAuthenticated(true) : setAuthenticated(false)
-        localStorage.setItem("username", res.data.user)
-        localStorage.setItem("token", res.data.token)
-        getData(res.data.user);
+        if (res.status === 200) {
+          setAuthenticated(true)
+          localStorage.setItem("username", res.data.user)
+          localStorage.setItem("token", res.data.token)
+          getData(res.data.user);
+          handleCloseLogin();
+        } else {
+          setAuthenticated(false);
+        }
+        // Username doesnt exist or Incorrect Password
+        if (res.status === 404 || res.status === 403) {
+          setEMessage(res.data.error)
+        }
     }));
-
-    handleCloseLogin();
 };
 
 const handleClickOpenSignup = () => { handleCloseLogin(); setOpenSignup(true); };
@@ -154,7 +163,7 @@ const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
             }}>{authenticated ? "Logout" : "Login"}</Button>
         </Toolbar>
       </AppBar>
-      <LoginPopup openLogin={openLogin} handleCloseLogin={handleCloseLogin} handleSubmitLogin={handleSubmitLogin} handleClickOpenSignup={handleClickOpenSignup} />
+      <LoginPopup openLogin={openLogin} handleCloseLogin={handleCloseLogin} handleSubmitLogin={handleSubmitLogin} handleClickOpenSignup={handleClickOpenSignup} eMessage={eMessage} />
       <SignupPopup
                 openSignup={openSignup}
                 handleCloseSignup={handleCloseSignup}

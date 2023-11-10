@@ -38,7 +38,10 @@ export default function App() {
               status: response.status
           })
           ).then(res => {
-              (res.status === 200 && res.data.user === username) ? getData(username!) : setAuthenticated(false);
+              if (res.status === 200 && res.data.user === username) {
+                getData(username!);
+                setAuthenticated(true);
+              } else { setAuthenticated(false); }
           }));
     }
 }, [])
@@ -49,26 +52,6 @@ export default function App() {
 
   // Is there a trap set up?
   const [trap, setTrap] = useState(false);
-  // // Wood, Fur, Berries
-  // var [forestR, setforestR] = useState([0,0,0]);
-  // // Frost Crystal, Thick Fur
-  // var [tundraR, setTundraR] = useState([0,0]);
-  // // Agrium, Feathers, Fresh Snow
-  // var [mountainsR, setMountainsR] = useState([0,0,0]);
-  // // Wheat, Meat, Herbs
-  // var [plainsR, setPlainsR] = useState([0,0,0]);
-  // // Fire Gem, Chitin
-  // var [desertR, setDesertR] = useState([0,0]);
-  // // Inscription, Runes
-  // var [ruinsR, setRuinsR] = useState([0,0]);
-  // // Water Gem, Fish, Salt
-  // var [oceanR, setOceanR] = useState(0);
-  // // Infernum, Volcanic Ash
-  // var [volcanoR, setVolcanoR] = useState([0,0]);
-  // // Essence, Fairy Dust
-  // var [groveR, setGroveR] = useState([0,0]);
-  // // 
-  // var [skyR, setSkyR] = useState(0);
 
   const resourcesArray = [
     {
@@ -82,6 +65,7 @@ export default function App() {
     {
       area: "tundra",
       resources: [
+        { resource: "snow", gain: 0, quantity: 0 },
         { resource: "ice_gem", gain: 0, quantity: 0 },
         { resource: "thick_fur", gain: 0, quantity: 0 },
       ],
@@ -89,8 +73,8 @@ export default function App() {
     {
       area: "mountains",
       resources: [
+        { resource: "coal", gain: 0, quantity: 0 },
         { resource: "ore", gain: 0, quantity: 0 },
-        { resource: "snow", gain: 0, quantity: 0 },
         { resource: "feather", gain: 0, quantity: 0 },
       ],
     },
@@ -105,6 +89,7 @@ export default function App() {
     {
       area: "desert",
       resources: [
+        { resource: "sand", gain: 0, quantity: 0 },
         { resource: "fire_gem", gain: 0, quantity: 0 },
         { resource: "chitin", gain: 0, quantity: 0 },
       ],
@@ -114,19 +99,22 @@ export default function App() {
       resources: [
         { resource: "inscription", gain: 0, quantity: 0 },
         { resource: "rune", gain: 0, quantity: 0 },
+        { resource: "energy", gain: 0, quantity: 0 },
+  
       ],
     },
     {
       area: "ocean",
       resources: [
-        { resource: "water_gem", gain: 0, quantity: 0 },
         { resource: "salt", gain: 0, quantity: 0 },
+        { resource: "water_gem", gain: 0, quantity: 0 },
         { resource: "fish", gain: 0, quantity: 0 },
       ],
     },
     {
       area: "volcano",
       resources: [
+        { resource: "obsidian", gain: 0, quantity: 0 },
         { resource: "new_ore", gain: 0, quantity: 0 },
         { resource: "ash", gain: 0, quantity: 0 },
       ],
@@ -134,6 +122,7 @@ export default function App() {
     {
       area: "grove",
       resources: [
+        { resource: "enchanted_wood", gain: 0, quantity: 0 },
         { resource: "essence", gain: 0, quantity: 0 },
         { resource: "fairy_dust", gain: 0, quantity: 0 },
       ],
@@ -141,7 +130,9 @@ export default function App() {
     {
       area: "sky",
       resources: [
+        { resource: "cloudstone", gain: 0, quantity: 0 },
         { resource: "air_gem", gain: 0, quantity: 0 },
+        { resource: "astral_feather", gain: 0, quantity: 0 }
       ],
     },
   ];
@@ -187,7 +178,8 @@ export default function App() {
   //console.log(resources[1].resources)
 
   // Unlocked areas
-  const [areas, setAreas] = useState(["forest"]);
+  const [areas, setAreas] = useState(["forest", "tundra", "mountains", "plains", "desert", "ruins", "ocean", "volcano", "enchanted grove", "sky islands"]);
+  // const [areas, setAreas] = useState(["forest"]);
 
   const [authenticated, setAuthenticated] = useState(false);
   const [area, setArea] = useState(1);
@@ -196,7 +188,6 @@ export default function App() {
   const [foodCounter, setFoodCounter] = useState(0);
 
   const getData = (username: string) => {
-    setAuthenticated(true);
     fetch("/api/data/" + username,{
       method: "GET",
       headers: {

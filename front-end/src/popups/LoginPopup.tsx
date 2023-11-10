@@ -17,8 +17,9 @@ export default function LoginPopup(props: any) {
             onClose={props.handleCloseLogin}
             >
             <DialogTitle>
-                <Typography variant="h5" align="center">Sign In</Typography></DialogTitle>
+                <Typography variant="h5" align="center">Login</Typography></DialogTitle>
             <DialogContent>
+                <br />
                 <Stack spacing={2}>
                     <TextField
                         label="Username"
@@ -31,6 +32,9 @@ export default function LoginPopup(props: any) {
                     />
                 </Stack>
             </DialogContent>
+            <Box alignContent="center" justifyContent="center" display="flex">
+                <Typography style={{ color: 'red' }}>{props.eMessage}</Typography>
+            </Box>
             <DialogActions>
                 <Box
                     display="flex"

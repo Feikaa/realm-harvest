@@ -7,23 +7,30 @@ import Berry from '../images/berry.png';
 import Ice from '../images/ice_gem.png';
 import ThickFur from '../images/thick_fur.png';
 import Snow from '../images/ice.png';
+import Coal from '../images/coal.png';
 import Ore from '../images/ore.png';
 import Feather from '../images/feather.png';
 import Wheat from '../images/wheat.png';
 import Meat from '../images/meat.png';
 import Herb from '../images/herb.png';
+import Sand from '../images/sand.png';
 import Fire from '../images/fire_gem.png';
 import Chitin from '../images/chitin.png';
 import Inscription from '../images/inscription.png';
+import Energy from '../images/energy.png';
 import Rune from '../images/rune.png';
 import Water from '../images/water_gem.png';
 import Fish from '../images/fish.png';
 import Salt from '../images/salt.png';
+import Obsidian from '../images/obsidian.png';
 import Volcano from '../images/volcano_ore.png';
 import Ash from '../images/ash.png';
+import EnchantedLog from '../images/enchanted_log.png';
 import Essence from '../images/magic_essence.png';
 import FairyDust from '../images/fairy.png';
+import Stone from '../images/stone.png';
 import Sky from '../images/sky_gem.png';
+import AstralFeather from '../images/astral_feather.png';
 
 interface Resource {
   resource: string;
@@ -75,17 +82,9 @@ export default function PopulationSection(props: any) {
   var population = props.population;
   const resources = props.resources;
   const setResources = props.setResources;
-  var pics = [[Log, Berry, Fur], [Ice, ThickFur], [Ore, Snow, Feather], [Wheat, Herb, Meat], [Fire, Chitin], [Inscription, Rune], [Water, Salt, Fish], [Volcano, Ash], [Essence, FairyDust], [Sky]];
+  var pics = [[Log, Berry, Fur], [Snow, Ice, ThickFur], [Coal, Ore, Feather], [Wheat, Herb, Meat], [Sand, Fire, Chitin], [Inscription, Rune, Energy], [Salt, Water, Fish], [Obsidian, Volcano, Ash], [EnchantedLog, Essence, FairyDust], [Stone, Sky, AstralFeather]];
 
   var areas = props.areas;
-
-  const [texts, setTexts] = useState<string[]>([]);
-
-  const handleTextChange = (index: number, value: string) => {
-    const newTexts = [...texts];
-    newTexts[index] = value;
-    setTexts(newTexts);
-  };
 
   const card = (
     <React.Fragment>

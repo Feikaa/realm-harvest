@@ -5,8 +5,7 @@ import Fur from '../../images/fur.png';
 import Ore from '../../images/ore.png';
 import Wheat from '../../images/wheat.png';
 import { Box, Button, Grid, List } from '@mui/material';
-import Homes from '../../images/home.png';
-import Axe from '../../images/axe.png';
+import Firepit from '../../images/firepit.png';
 import Warm from '../../images/warm.png';
 
 export default function Upgrade1Section(props: any) {
@@ -58,53 +57,10 @@ export default function Upgrade1Section(props: any) {
           variant="contained" sx={{ width: "80%" }}
           color='info'
           disabled={resources[0].resources[0].quantity >= 50 ? false : true}>
-            Homes
-            <img src={Homes} alt="Home" width="64" height='64' />&nbsp;&nbsp;
+            Firepit
+            <img src={Firepit} alt="Home" width="64" height='64' />&nbsp;&nbsp;
             <Box alignItems="center" justifyContent="center">
-              Allows your population to grow
-            </Box>
-            <Grid container spacing={0} direction="row" alignItems="center" justifyContent="right">
-                <React.Fragment>
-                <Box sx={{border: 1, width: "70px"}}>
-                  <img src={Log} alt="Log" height="48" width="48"></img>
-                  <br />
-                  50
-                </Box>
-                </React.Fragment>
-            </Grid>
-          </Button>
-        </Box>}
-
-        {upgrades[0].upgrades[1].purchased ? "" :
-        <Box sx={{paddingTop: "1%" }}>
-          <Button onClick={() => {
-            setUpgrades((prev: any) => {
-              const newUpgrades = [...prev];
-              const tempUpgrades = newUpgrades[0].upgrades[1];
-        
-              tempUpgrades.purchased = true;
-        
-              return newUpgrades;
-            });
-            setResources((prev: any) => {
-              const newResources = [...prev];
-              const resource = newResources[0].resources[0];
-        
-              const newQuantity = resource.quantity - 50;
-        
-              resource.gain -= 50;
-              resource.quantity = newQuantity;
-        
-              return newResources;
-            })
-          }}
-          variant="contained" sx={{ width: "80%" }}
-          color='info'
-          disabled={resources[0].resources[0].quantity >= 50 ? false : true}>
-            Axe
-            <img src={Axe} alt="axe" width="64" height='64' />&nbsp;&nbsp;
-            <Box alignItems="center" justifyContent="center">
-              Makes harvesting faster
+              Allows you to make food to help grow your population
             </Box>
             <Grid container spacing={0} direction="row" alignItems="center" justifyContent="right">
                 <React.Fragment>

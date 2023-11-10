@@ -65,8 +65,8 @@ export default function PopulationSection(props: any) {
   
         return newResources;
       });
-      // If area has secondary resources, roll for them
-      if (secondaryAreas.includes(area+1) && Math.floor(Math.random() * 10) <= 2) {
+      // Roll for 2ndary resource
+      if (Math.floor(Math.random() * 10) <= 2) {
         setResources((prev: any) => {
           const newResources = [...prev];
           const resource = newResources[area].resources[1];
@@ -78,6 +78,20 @@ export default function PopulationSection(props: any) {
     
           return newResources;
         });
+      }
+      // If area is Desert or Volcano, roll for 3rd resource
+      if ((area === 5 || area === 7) && Math.floor(Math.random() * 10) <= 1) {
+        setResources((prev: any) => {
+          const newResources = [...prev];
+          const resource = newResources[area].resources[2];
+    
+          const newQuantity = resource.quantity + increase;
+    
+          resource.gain += increase;
+          resource.quantity = newQuantity;
+    
+          return newResources;
+        })
       }
     }
   } 
