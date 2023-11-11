@@ -67,7 +67,7 @@ export default function RealmsSection(props: any) {
 
     const handleChange = (value: number) => {
         setArea(value);
-        setBodyColor(colors[value - 1]);
+        //setBodyColor(colors[value - 1]);
       };
 
     return (

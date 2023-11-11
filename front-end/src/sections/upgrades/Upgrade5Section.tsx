@@ -6,6 +6,10 @@ import Ore from '../../images/ore.png';
 import Wheat from '../../images/wheat.png';
 import { Box, Button, Grid, List } from '@mui/material';
 
+const courierFontStyle = {
+  fontFamily: 'Kurale, monospace',
+};
+
 export default function Upgrade5Section(props: any) {
 
   var population = props.population;

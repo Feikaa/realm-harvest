@@ -35,9 +35,11 @@ export default function PopulationSection(props: any) {
   var area = props.area;
   var upgrades = props.upgrades;
   const p = props.p;
+  const setP = props.setP;
   const t = props.t;
   const setT = props.setT;
   const [harvest, setHarvest] = useState(0);
+  const [trapArea, setTrapArea] = useState(0);
   const trap = props.trap;
   const setTrap = props.setTrap;
   const aPop = props.aPop;
@@ -46,6 +48,10 @@ export default function PopulationSection(props: any) {
   var areas = [Forest, Tundra, Mountain, Plains, Desert, Ruins, Ocean, Volcano, EnchantedGrove, SkyIsland];
   const harvestAreas = [1, 2, 3, 4, 5, 7, 9];
   const secondaryAreas = [1, 3, 4, 6, 7, 8];
+
+  useEffect(() => {
+    setHarvest(0);
+  }, [area]);
 
   // type = what kind of resource
   const handleHarvest = (area: number, type: number, increase: number, boost: number, mode: string) => {
@@ -112,6 +118,8 @@ export default function PopulationSection(props: any) {
       return newItems;
     })
     setTrap(true);
+    setTrapArea(area);
+    // console.log(area);
   }
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -127,7 +135,8 @@ export default function PopulationSection(props: any) {
   }));
 
   useEffect(() => {
-    if (p === 100) {
+    console.log(p);
+    if (p >= 100) {
       for (let i = 0; i < allocated.length; i++) {
         if (allocated[i] > 0) {
           for (let j = 0; j < resources[i].resources.length; j++) {
@@ -150,6 +159,7 @@ export default function PopulationSection(props: any) {
           }
         }
       }
+      setP((p: any) => p - 100);
     }
   }, [p])
 
@@ -171,12 +181,12 @@ export default function PopulationSection(props: any) {
         </Typography>
         <Typography style={courierFontStyle}>
           {aPop === population ? "Idle" : "Auto"}
-          <BorderLinearProgress variant='determinate' value={p} sx={{ maxWidth: '25%' }} style={{ marginLeft: "37.5%"}} />
+          <BorderLinearProgress variant='determinate' value={p <= 100 ? p : 100} sx={{ maxWidth: '25%' }} style={{ marginLeft: "37.5%"}} />
           {aPop === population ? "" : p < 40 ? "Travelling..." : p < 80 ? "Collecting..." : "Returning..."}
         </Typography>
         <Typography>
             <br />
-            <img src={areas[area - 1]} width="1024px" height="512px"></img>
+            <img src={areas[area - 1]} width="768px" height="384px"></img>
         </Typography>
         <Typography variant="h4">
           <br />
@@ -186,9 +196,9 @@ export default function PopulationSection(props: any) {
                 <BorderLinearProgress value={(harvest/4) * 100} variant='determinate' />
               </Box>
               {
-                upgrades[0].upgrades[1].purchased ?
+                upgrades[2].upgrades[0].purchased && area === 1 ?
                 <Button variant="contained" color="success" disableRipple onClick={() => {handleHarvest(area - 1, 0, 1, 1, "")}} style={courierFontStyle}>
-                  {area === 3 ? <IconSickle /> : area === 2 ? <IconPickaxe /> : area === 1 ? <IconAxe /> : <IconHandBackFist />}&nbsp;&nbsp;Harvest
+                  <IconAxe />&nbsp;&nbsp;Harvest
                 </Button>
               :
                 <Button variant="contained" color="success" disableRipple onClick={() => {handleHarvest(area - 1, 0, 1, 0, "")}} style={courierFontStyle}>
@@ -199,8 +209,8 @@ export default function PopulationSection(props: any) {
             {harvestAreas.includes(area) ?
             <Box>
               <BorderLinearProgress value={t} variant='determinate' />
-              <Button variant="contained" color="success" disableRipple disabled={items[0].quantity > 0 && trap === false ? false : t === 100 ? false : true} onClick={t < 100 ? () => {handleTrap(0)} : () => {
-                handleHarvest(0, 2, 2 + Math.floor(Math.random() * 4), 0, "auto");
+              <Button variant="contained" color="success" disableRipple disabled={(area !== trapArea && t >= 100) ? true : items[0].quantity > 0 && trap === false ? false : t === 100 ? false : true} onClick={t < 100 ? () => {handleTrap(0)} : () => {
+                handleHarvest(area - 1, 2, 2 + Math.floor(Math.random() * 4), 0, "auto");
                 setTrap(false);
                 setT(0);
               }} style={courierFontStyle}>

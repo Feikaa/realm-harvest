@@ -50,7 +50,7 @@ export default function CraftSection(props: any) {
                 resource.quantity = newQuantity;
             
                 return newResources;
-                })
+            })
         }
   }
 
@@ -143,7 +143,7 @@ export default function CraftSection(props: any) {
             </Card>
             : ""}
 
-            {upgrades[0].upgrades[2].purchased ?
+            {upgrades[0].upgrades[1].purchased ?
             <Card sx={{ backgroundColor: "#D3D3D3", borderRadius: '16px', marginBottom: '8px' }}>
             <CardContent sx={{ paddingBottom: '16px !important' }}>
             <Stack direction="row" spacing={1} justifyContent='space-between'>

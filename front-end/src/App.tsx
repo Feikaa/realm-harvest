@@ -67,7 +67,7 @@ export default function App() {
       resources: [
         { resource: "snow", gain: 0, quantity: 0 },
         { resource: "ice_gem", gain: 0, quantity: 0 },
-        { resource: "thick_fur", gain: 0, quantity: 0 },
+        { resource: "thick_fur", gain: 0, quantity: 50 },
       ],
     },
     {
@@ -161,15 +161,21 @@ export default function App() {
       area: "forest",
       upgrades: [
         { upgrade: "houses", purchased: false },
-        { upgrade: "axe", purchased: false },
         { upgrade: 'warm', purchased: false }
       ],
     },
     {
       area: "tundra",
       upgrades: [
-        { upgrade: "rope", purchased: false },
+        { upgrade: "landmarkers", purchased: false },
+        { upgrade: "gear", purchased: false },
       ],
+    },
+    {
+      area: "mountains",
+      upgrades: [
+        { upgrade: "axe", purchased: false },
+      ]
     },
   ]
   
@@ -230,7 +236,7 @@ export default function App() {
     // Auto harvest ticks
     if (aPop < population) {
       if (p < 100) {
-        setP((p: any) => p + 20);
+          setP((p: any) => p + 20 + (upgrades[1].upgrades[0].purchased ? 2 : 0));
       } else {
         setP(0);
       }
@@ -311,7 +317,7 @@ export default function App() {
             items={items} setItems={setItems} upgrades={upgrades} setUpgrades={setUpgrades} />
           </Grid>
           <Grid item xs={8}>
-            <HarvestSection population={population} setPopulation={setPopulation} area={area} p={p} t={t} setT={setT} trap={trap} setTrap={setTrap}
+            <HarvestSection population={population} setPopulation={setPopulation} area={area} p={p} setP={setP} t={t} setT={setT} trap={trap} setTrap={setTrap}
             resources={resources} setResources={setResources}
             items={items} setItems={setItems}
             upgrades={upgrades} aPop={aPop} setAPop={setAPop} allocated={allocated} setAllocated={setAllocated}

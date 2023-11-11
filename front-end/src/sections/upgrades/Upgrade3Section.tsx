@@ -7,6 +7,10 @@ import Wheat from '../../images/wheat.png';
 import { Box, Button, Grid, List } from '@mui/material';
 import Axe from '../../images/axe.png';
 
+const courierFontStyle = {
+  fontFamily: 'Kurale, monospace',
+};
+
 export default function Upgrade3Section(props: any) {
 
   var population = props.population;
@@ -30,12 +34,12 @@ export default function Upgrade3Section(props: any) {
     <Paper style={{ height: 672, width: '100%', overflow: 'auto' }}>
       <List>
 
-      {upgrades[0].upgrades[1].purchased ? "" :
+      {upgrades[2].upgrades[0].purchased ? "" :
         <Box sx={{paddingTop: "1%" }}>
           <Button onClick={() => {
             setUpgrades((prev: any) => {
               const newUpgrades = [...prev];
-              const tempUpgrades = newUpgrades[0].upgrades[1];
+              const tempUpgrades = newUpgrades[2].upgrades[0];
         
               tempUpgrades.purchased = true;
         
@@ -55,7 +59,7 @@ export default function Upgrade3Section(props: any) {
           }}
           variant="contained" sx={{ width: "80%" }}
           color='info'
-          disabled={resources[0].resources[0].quantity >= 50 ? false : true}>
+          disabled={resources[0].resources[0].quantity >= 50 ? false : true} style={courierFontStyle}>
             Axe
             <img src={Axe} alt="axe" width="64" height='64' />&nbsp;&nbsp;
             <Box alignItems="center" justifyContent="center">

@@ -8,6 +8,10 @@ import { Box, Button, Grid, List } from '@mui/material';
 import Firepit from '../../images/firepit.png';
 import Warm from '../../images/warm.png';
 
+const courierFontStyle = {
+    fontFamily: 'Kurale, monospace',
+  };
+
 export default function Upgrade1Section(props: any) {
 
   var population = props.population;
@@ -56,7 +60,7 @@ export default function Upgrade1Section(props: any) {
           }}
           variant="contained" sx={{ width: "80%" }}
           color='info'
-          disabled={resources[0].resources[0].quantity >= 50 ? false : true}>
+          disabled={resources[0].resources[0].quantity >= 50 ? false : true} style={courierFontStyle}>
             Firepit
             <img src={Firepit} alt="Home" width="64" height='64' />&nbsp;&nbsp;
             <Box alignItems="center" justifyContent="center">
@@ -74,7 +78,7 @@ export default function Upgrade1Section(props: any) {
           </Button>
         </Box>}
 
-        {upgrades[0].upgrades[2].purchased ? "" :
+        {upgrades[0].upgrades[1].purchased ? "" :
         <Box sx={{paddingTop: "1%" }}>
           <Button onClick={() => {
             setUpgrades((prev: any) => {
@@ -100,7 +104,7 @@ export default function Upgrade1Section(props: any) {
           }}
           variant="contained" sx={{ width: "80%" }}
           color='info'
-          disabled={resources[0].resources[0].quantity >= 50 ? false : true}>
+          disabled={resources[0].resources[2].quantity >= 10 ? false : true} style={courierFontStyle}>
             Warm Clothing
             <img src={Warm} alt="warm" width="64" height='64' />&nbsp;&nbsp;
             <Box alignItems="center" justifyContent="center">
