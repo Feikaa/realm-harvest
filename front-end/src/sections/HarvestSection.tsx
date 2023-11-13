@@ -13,8 +13,9 @@ import EnchantedGrove from '../images/enchanted_grove.png';
 import IconHandBackFist from '../icons/IconHandBackFist';
 import IconAxe from '../icons/IconAxe';
 import IconPickaxe from '../icons/IconPickaxe';
-import IconSickle from '../icons/IconSickle';
+import IconSickle from '../icons/IconShovel';
 import IconTrap from '../images/trap.png';
+import IconShovel from '../icons/IconShovel';
 
 const courierFontStyle = {
   fontFamily: 'Kurale',
@@ -196,9 +197,19 @@ export default function PopulationSection(props: any) {
                 <BorderLinearProgress value={(harvest/4) * 100} variant='determinate' />
               </Box>
               {
-                upgrades[2].upgrades[0].purchased && area === 1 ?
+                upgrades[2].upgrades[1].purchased && (area === 1 || area === 4 || area === 9) ?
                 <Button variant="contained" color="success" disableRipple onClick={() => {handleHarvest(area - 1, 0, 1, 1, "")}} style={courierFontStyle}>
                   <IconAxe />&nbsp;&nbsp;Harvest
+                </Button>
+              :
+                upgrades[2].upgrades[2].purchased && (area === 2 || area === 5 || area === 7) ?
+                <Button variant="contained" color="success" disableRipple onClick={() => {handleHarvest(area - 1, 0, 1, 1, "")}} style={courierFontStyle}>
+                  <IconShovel />&nbsp;&nbsp;Harvest
+                </Button>
+              :
+                upgrades[2].upgrades[3].purchased && (area === 3 || area === 6 || area === 8) ?
+                <Button variant="contained" color="success" disableRipple onClick={() => {handleHarvest(area - 1, 0, 1, 1, "")}} style={courierFontStyle}>
+                  <IconPickaxe />&nbsp;&nbsp;Harvest
                 </Button>
               :
                 <Button variant="contained" color="success" disableRipple onClick={() => {handleHarvest(area - 1, 0, 1, 0, "")}} style={courierFontStyle}>

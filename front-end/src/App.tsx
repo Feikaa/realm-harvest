@@ -151,6 +151,9 @@ export default function App() {
     },
     {
       item: "warm", quantity: 0,
+    },
+    {
+      item: "iron", quantity: 0,
     }
   ]
 
@@ -174,7 +177,10 @@ export default function App() {
     {
       area: "mountains",
       upgrades: [
+        { upgrade: "furnace", purchased: false},
         { upgrade: "axe", purchased: false },
+        { upgrade: "shovel", purchased: false},
+        { upgrade: "pickaxe", purchased: false },
       ]
     },
   ]
